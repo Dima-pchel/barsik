@@ -4,7 +4,8 @@ import discord4j.core.object.entity.Message;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import reactor.core.publisher.Mono;
-import ru.kets.barsik.command.DiscordCommandHandler;
+import ru.kets.barsik.command.MessageCommandHandler;
+import ru.kets.barsik.helper.LastMessage;
 
 import java.util.Map;
 
@@ -13,7 +14,7 @@ import static ru.kets.barsik.Constants.COMMAND_PREFIX;
 public abstract class MessageListener {
 
     @Autowired
-    Map<String, DiscordCommandHandler> commandMap;
+    Map<String, MessageCommandHandler> commandMap;
 
     public Mono<Void> processCommand(Message eventMessage) {
         String mes = getMessage(eventMessage);
@@ -30,12 +31,14 @@ public abstract class MessageListener {
         String content = message.getContent();
         String[] commands = content.split(" ");
         if (commands.length > 1) {
-            DiscordCommandHandler discordCommand = commandMap.get(commands[1]);
+            MessageCommandHandler discordCommand = commandMap.get(commands[1]);
             if (discordCommand != null) {
-                return discordCommand.command(message);
+                String command = discordCommand.command(message);
+                LastMessage.addLastMessage(command, message.getAuthor().get().getUsername());
+                return command;
             }
         }
-        return StringUtils.EMPTY;
+        return "МЯУ!";
     }
 
 }

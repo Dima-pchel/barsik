@@ -3,12 +3,10 @@ package ru.kets.barsik.command;
 import discord4j.core.object.entity.Message;
 import org.springframework.stereotype.Component;
 
-@Component("speak")
-public class SpeakCommandHandler implements MessageCommandHandler {
-
+@Component("meow")
+public class SayMeowCommandHandler implements MessageCommandHandler{
     @Override
     public String command(Message eventMessage) {
-        return "What is the meaning of my life? \n" +
-                "Master";
+        return "https://tenor.com/view/lily-woof-meow-cat-gif-11908890";
     }
 }

@@ -10,9 +10,10 @@ import java.util.List;
 import java.util.Optional;
 
 import static ru.kets.barsik.Constants.COMMAND_PREFIX;
+import static ru.kets.barsik.Constants.ERROR_MESSAGE;
 
 @Component("ban")
-public class BanCommandHandler implements DiscordCommandHandler {
+public class BanCommandHandler implements MessageCommandHandler {
 
     private List<String> banReasons = new ArrayList<>(Arrays.asList("Забаню %s за красивые глаза", "%s забанен за длинные усы", "ban %s for no reason"));
 
@@ -32,7 +33,7 @@ public class BanCommandHandler implements DiscordCommandHandler {
         return Optional.ofNullable(content.toLowerCase())
                 .map(command -> StringUtils.remove(command, COMMAND_PREFIX))
                 .map(command -> StringUtils.remove(command, COMMAND_NAME))
-                .map(String::trim).orElse("мяу");
+                .map(String::trim).orElse(ERROR_MESSAGE);
     }
 
     private String getBanReason() {

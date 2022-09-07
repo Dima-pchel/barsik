@@ -7,14 +7,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import ru.kets.barsik.event.EventListener;
 
 import java.util.Optional;
 
 import static ru.kets.barsik.Constants.COMMAND_PREFIX;
+import static ru.kets.barsik.Constants.ERROR_MESSAGE;
 
 @Component("avatar")
-public class AvatarCommandHandler implements DiscordCommandHandler {
+public class AvatarCommandHandler implements MessageCommandHandler {
 
     Logger LOG = LoggerFactory.getLogger(AvatarCommandHandler.class);
 
@@ -34,13 +34,13 @@ public class AvatarCommandHandler implements DiscordCommandHandler {
                 }
             }
         }
-        return "МЯУ";
+        return ERROR_MESSAGE;
     }
 
     private String extractUser(String content) {
         return Optional.ofNullable(content)
                 .map(command -> StringUtils.remove(command, COMMAND_PREFIX))
                 .map(command -> StringUtils.remove(command, COMMAND_NAME))
-                .map(String::trim).orElse("мяу");
+                .map(String::trim).orElse(ERROR_MESSAGE);
     }
 }
