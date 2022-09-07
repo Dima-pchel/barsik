@@ -22,16 +22,16 @@ public class BanCommandHandler implements DiscordCommandHandler {
     public String command(Message eventMessage) {
         String content = eventMessage.getContent();
         String user = extractUser(content);
-        if(StringUtils.isNotBlank(user) && user.startsWith("<@")) {
+        if (StringUtils.isNotBlank(user) && user.startsWith("<@")) {
             return String.format(getBanReason(), user);
         }
         return "ban <@" + eventMessage.getAuthor().get().getId().asString() + "> for broken hands";
     }
 
     private String extractUser(String content) {
-        return Optional.ofNullable(content)
-                .map(command -> StringUtils.remove(command,COMMAND_PREFIX))
-                .map(command -> StringUtils.remove(command,COMMAND_NAME))
+        return Optional.ofNullable(content.toLowerCase())
+                .map(command -> StringUtils.remove(command, COMMAND_PREFIX))
+                .map(command -> StringUtils.remove(command, COMMAND_NAME))
                 .map(String::trim).orElse("мяу");
     }
 
