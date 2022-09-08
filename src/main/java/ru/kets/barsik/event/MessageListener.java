@@ -6,14 +6,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import reactor.core.publisher.Mono;
-import ru.kets.barsik.command.AvatarCommandHandler;
 import ru.kets.barsik.command.MessageCommandHandler;
 import ru.kets.barsik.helper.LastMessage;
 
 import java.util.Map;
 
-import static ru.kets.barsik.Constants.COMMAND_PREFIX;
-import static ru.kets.barsik.Constants.ERROR_MESSAGE;
+import static ru.kets.barsik.constant.Constants.COMMAND_PREFIX;
+import static ru.kets.barsik.constant.Constants.ERROR_MESSAGE;
 
 public abstract class MessageListener {
     Logger LOG = LoggerFactory.getLogger(MessageListener.class);
@@ -46,7 +45,7 @@ public abstract class MessageListener {
         String content = message.getContent();
         String[] commands = content.split(" ");
         if (commands.length > 1) {
-            MessageCommandHandler discordCommand = commandMap.get(commands[1]);
+            MessageCommandHandler discordCommand = commandMap.get(commands[1].toLowerCase());
             if (discordCommand != null) {
                 String command = discordCommand.command(message);
                 LastMessage.addLastMessage(command, message.getAuthor().get().getUsername());

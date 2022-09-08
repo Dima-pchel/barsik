@@ -3,13 +3,9 @@ package ru.kets.barsik.integrations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 import ru.kets.barsik.integrations.pojo.CatMessage;
 
-import java.net.URI;
-
-import static ru.kets.barsik.Constants.ERROR_MESSAGE;
+import static ru.kets.barsik.constant.Constants.ERROR_MESSAGE;
 
 @Component
 public class CatClient extends AbstractImageClient implements ImageClient{

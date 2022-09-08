@@ -7,11 +7,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import ru.kets.barsik.helper.CommandHelper;
 
 import java.util.Optional;
 
-import static ru.kets.barsik.Constants.COMMAND_PREFIX;
-import static ru.kets.barsik.Constants.ERROR_MESSAGE;
+import static ru.kets.barsik.constant.Constants.*;
 
 @Component("avatar")
 public class AvatarCommandHandler implements MessageCommandHandler {
@@ -22,25 +22,18 @@ public class AvatarCommandHandler implements MessageCommandHandler {
 
     @Override
     public String command(Message eventMessage) {
-        String user = extractUser(eventMessage.getContent());
+        String user = CommandHelper.extractMessage(eventMessage.getContent(), COMMAND_NAME);
         if (StringUtils.isNotBlank(user) && user.startsWith("<@")) {
             for (PartialMember memberMention : eventMessage.getMemberMentions()) {
                 if (user.contains(memberMention.getId().asString())) {
                     LOG.info(memberMention.getAvatarUrl());
                     Optional<String> avatarUrl = memberMention.getAvatarUrl(Image.Format.WEB_P);
                     if (avatarUrl.isPresent()) {
-                        return avatarUrl.get() + "?size=480";
+                        return avatarUrl.get() + IMAGE_SIZE_PARAMETER;
                     }
                 }
             }
         }
         return ERROR_MESSAGE;
-    }
-
-    private String extractUser(String content) {
-        return Optional.ofNullable(content)
-                .map(command -> StringUtils.remove(command, COMMAND_PREFIX))
-                .map(command -> StringUtils.remove(command, COMMAND_NAME))
-                .map(String::trim).orElse(ERROR_MESSAGE);
     }
 }

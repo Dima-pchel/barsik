@@ -3,7 +3,7 @@ package ru.kets.barsik.command;
 import discord4j.core.object.entity.Message;
 import org.springframework.stereotype.Component;
 
-import static ru.kets.barsik.Constants.ERROR_MESSAGE;
+import static ru.kets.barsik.constant.Constants.ERROR_MESSAGE;
 
 @Component("tag")
 public class TagCommandHandler implements MessageCommandHandler {

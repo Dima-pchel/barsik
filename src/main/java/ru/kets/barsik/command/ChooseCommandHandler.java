@@ -3,11 +3,12 @@ package ru.kets.barsik.command;
 import discord4j.core.object.entity.Message;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
+import ru.kets.barsik.helper.CommandHelper;
 
 import java.util.Optional;
 
-import static ru.kets.barsik.Constants.COMMAND_PREFIX;
-import static ru.kets.barsik.Constants.ERROR_MESSAGE;
+import static ru.kets.barsik.constant.Constants.COMMAND_PREFIX;
+import static ru.kets.barsik.constant.Constants.ERROR_MESSAGE;
 
 @Component("choose")
 public class ChooseCommandHandler implements MessageCommandHandler {
@@ -15,7 +16,7 @@ public class ChooseCommandHandler implements MessageCommandHandler {
 
     @Override
     public String command(Message eventMessage) {
-        String choose = extractContent(eventMessage.getContent());
+        String choose = CommandHelper.extractMessage(eventMessage.getContent(), COMMAND_NAME);
         String[] variants = choose.split(",");
         if (variants.length > 0) {
             int index = (int) (Math.random() * (variants.length));
@@ -23,12 +24,4 @@ public class ChooseCommandHandler implements MessageCommandHandler {
         }
         return ERROR_MESSAGE;
     }
-
-    private String extractContent(String content) {
-        return Optional.ofNullable(content.toLowerCase())
-                .map(command -> StringUtils.remove(command, COMMAND_PREFIX))
-                .map(command -> StringUtils.remove(command, COMMAND_NAME))
-                .map(String::trim).orElse(ERROR_MESSAGE);
-    }
-
 }
