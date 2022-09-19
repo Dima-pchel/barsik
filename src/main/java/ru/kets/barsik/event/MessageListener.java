@@ -52,7 +52,7 @@ public abstract class MessageListener {
                 return command;
             }
         }
-        return "МЯУ!";
+        return ERROR_MESSAGE;
     }
 
 }
