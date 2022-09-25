@@ -22,8 +22,6 @@ public abstract class MessageListener {
 
     public Mono<Void> processCommand(Message eventMessage) {
         try {
-
-
             String mes = getMessage(eventMessage);
             return Mono.just(eventMessage)
                     .filter(message -> message.getAuthor().map(user -> !user.isBot()).orElse(false))

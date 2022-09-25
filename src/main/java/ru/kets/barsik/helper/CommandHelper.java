@@ -16,4 +16,8 @@ public class CommandHelper {
                 .map(command -> StringUtils.remove(command, commandName))
                 .map(String::trim).orElse(ERROR_MESSAGE);
     }
+
+    public static int generateRandomNumber(int max) {
+         return (int) (Math.random() * max);
+    }
 }
