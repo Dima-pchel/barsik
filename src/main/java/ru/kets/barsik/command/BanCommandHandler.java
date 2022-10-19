@@ -6,10 +6,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import ru.kets.barsik.helper.CommandHelper;
+import ru.kets.barsik.repo.BanReasonRepo;
+import ru.kets.barsik.repo.pojo.BanReason;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static ru.kets.barsik.helper.CommandHelper.generateRandomNumber;
 
@@ -30,12 +35,15 @@ public class BanCommandHandler implements MessageCommandHandler {
 
     private static final String COMMAND_NAME = "ban";
 
+    @Resource
+    BanReasonRepo reasonRepo;
+
     @Override
     public String command(Message eventMessage) {
-        String content = eventMessage.getContent();
         if (1 == generateRandomNumber(10)) {
             return String.format(getBanReason(), "<@" + eventMessage.getAuthor().get().getId().asString() + ">");
         }
+        String content = eventMessage.getContent();
         String user = CommandHelper.extractMessage(content, COMMAND_NAME);
         if (StringUtils.isNotBlank(user) && user.startsWith("<@")) {
             return String.format(getBanReason(), user);
@@ -45,6 +53,10 @@ public class BanCommandHandler implements MessageCommandHandler {
     }
 
     private String getBanReason() {
-        return banReasons.get((int) (Math.random() * (banReasons.size())));
+        List<String> reasons = reasonRepo.findAll().stream()
+                .map(BanReason::getText)
+                .collect(Collectors.toList());
+
+        return reasons.get((int) (Math.random() * (reasons.size())));
     }
 }
