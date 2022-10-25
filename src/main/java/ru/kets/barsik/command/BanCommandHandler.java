@@ -10,10 +10,7 @@ import ru.kets.barsik.repo.BanReasonRepo;
 import ru.kets.barsik.repo.pojo.BanReason;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import static ru.kets.barsik.helper.CommandHelper.generateRandomNumber;
@@ -22,16 +19,6 @@ import static ru.kets.barsik.helper.CommandHelper.generateRandomNumber;
 public class BanCommandHandler implements MessageCommandHandler {
 
     Logger LOG = LoggerFactory.getLogger(BanCommandHandler.class);
-
-    private List<String> banReasons = new ArrayList<>(Arrays.asList("%s has been banned for being too awesome",
-            "%s has been banned for not being Kulon",
-            "%s has been banned for having too fluffy tail",
-            "%s has been banned for eating too much pizza",
-            "%s has been banned for not enough slacking",
-            "%s has been banned for not being cat",
-            "%s has been banned for having fun",
-            "%s has been banned for being bad cat \n" +
-                    "https://cdn.discordapp.com/attachments/822912238519058462/1021839876620042421/6474ec4879642040.png"));
 
     private static final String COMMAND_NAME = "ban";
 

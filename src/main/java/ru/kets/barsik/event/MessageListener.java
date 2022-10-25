@@ -22,13 +22,12 @@ public abstract class MessageListener {
 
     public Mono<Void> processCommand(Message eventMessage) {
         try {
-            String mes = getMessage(eventMessage);
             return Mono.just(eventMessage)
                     .filter(message -> message.getAuthor().map(user -> !user.isBot()).orElse(false))
                     .filter(message -> StringUtils.isNotBlank(message.getContent())
                             && message.getContent().toLowerCase().startsWith(COMMAND_PREFIX))
                     .flatMap(Message::getChannel)
-                    .flatMap(channel -> channel.createMessage(mes))
+                    .flatMap(channel -> channel.createMessage(getMessage(eventMessage)))
                     .then();
         } catch (Exception e) {
             LOG.error("Capitan we have a problem :" + e.getMessage(), e);
