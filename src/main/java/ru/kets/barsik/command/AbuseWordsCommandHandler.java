@@ -25,7 +25,7 @@ public class AbuseWordsCommandHandler implements MessageCommandHandler{
         List<Word> words = new ArrayList<>();
         for (String w : split) {
             Word word = new Word();
-            word.setWord(removeInvertedCommas(w));
+            word.setWord(removeInvertedCommas(trimUnicodeSurrogateCharacters(w)));
             word.setType(Word.Type.ABUSE);
             words.add(word);
         }
@@ -35,5 +35,16 @@ public class AbuseWordsCommandHandler implements MessageCommandHandler{
 
     private String removeInvertedCommas(String word) {
         return StringUtils.remove(word, "\"").trim();
+    }
+
+    public static String trimUnicodeSurrogateCharacters(String message) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < message.length(); i++) {
+            char ch = message.charAt(i);
+            if (!Character.isHighSurrogate(ch) && !Character.isLowSurrogate(ch)) {
+                sb.append(ch);
+            }
+        }
+        return sb.toString();
     }
 }
