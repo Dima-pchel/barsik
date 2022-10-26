@@ -46,7 +46,7 @@ public abstract class MessageListener {
         } catch (AbuseException ae) {
             return Mono.just(eventMessage)
                     .flatMap(Message::getChannel)
-                    .flatMap(channel -> channel.createMessage(":nou:"))
+                    .flatMap(channel -> channel.createMessage(NO_U_EMOJI))
                     .then();
         } catch (Exception e) {
             LOG.error("Capitan we have a problem :" + e.getMessage(), e);
