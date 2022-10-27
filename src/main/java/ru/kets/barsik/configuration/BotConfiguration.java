@@ -16,14 +16,13 @@ public class BotConfiguration {
     @Value("${token}")
     private String token;
 
+    private GatewayDiscordClient client;
+
     @Bean
     public <T extends Event> GatewayDiscordClient gatewayDiscordClient(List<EventListener<T>> eventListeners) {
-        GatewayDiscordClient client = DiscordClientBuilder.create(token)
-                .build()
-                .login()
-                .block();
+        GatewayDiscordClient client = getGatewayDiscordClient();
 
-        for(EventListener<T> listener : eventListeners) {
+        for (EventListener<T> listener : eventListeners) {
 
             client.on(listener.getEventType())
                     .flatMap(listener::execute)
@@ -34,6 +33,18 @@ public class BotConfiguration {
         return client;
     }
 
+    @Bean
+    public GatewayDiscordClient getGatewayDiscordClient() {
+        if (this.client == null) {
+            GatewayDiscordClient client = DiscordClientBuilder.create(token)
+                    .build()
+                    .login()
+                    .block();
+            this.client = client;
+            return client;
+        }
+        return client;
+    }
 
 
 }
