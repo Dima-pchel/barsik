@@ -1,0 +1,2 @@
+# barsik
+discord funny bot
