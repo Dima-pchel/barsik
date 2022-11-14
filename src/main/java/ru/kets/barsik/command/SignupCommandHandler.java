@@ -20,10 +20,6 @@ public class SignupCommandHandler implements MessageCommandHandler {
     @Resource
     private SignupRepo signupRepo;
 
-    /*
-     * create bio
-     * */
-
     @Override
     public String command(Message eventMessage) {
         String content = eventMessage.getContent();

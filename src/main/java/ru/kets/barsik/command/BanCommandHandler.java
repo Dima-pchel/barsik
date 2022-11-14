@@ -27,7 +27,7 @@ public class BanCommandHandler implements MessageCommandHandler {
 
     @Override
     public String command(Message eventMessage) {
-        if (1 == generateRandomNumber(10)) {
+        if (1 == generateRandomNumber(15)) {
             return String.format(getBanReason(), "<@" + eventMessage.getAuthor().get().getId().asString() + ">");
         }
         String content = eventMessage.getContent();

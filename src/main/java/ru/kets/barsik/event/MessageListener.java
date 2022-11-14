@@ -44,17 +44,18 @@ public abstract class MessageListener {
                     .flatMap(channel -> channel.createMessage(getMessage(eventMessage)))
                     .then();
         } catch (AbuseException ae) {
-            return Mono.just(eventMessage)
-                    .flatMap(Message::getChannel)
-                    .flatMap(channel -> channel.createMessage(NO_U_EMOJI))
-                    .then();
+            return sendAnswer(eventMessage, NO_U_EMOJI);
         } catch (Exception e) {
             LOG.error("Capitan we have a problem :" + e.getMessage(), e);
-            return Mono.just(eventMessage)
-                    .flatMap(Message::getChannel)
-                    .flatMap(channel -> channel.createMessage(ERROR_MESSAGE))
-                    .then();
+            return sendAnswer(eventMessage, ERROR_MESSAGE);
         }
+    }
+
+    private static Mono<Void> sendAnswer(Message eventMessage, String message) {
+        return Mono.just(eventMessage)
+                .flatMap(Message::getChannel)
+                .flatMap(channel -> channel.createMessage(message))
+                .then();
     }
 
     private void validateMessage(Message eventMessage) throws AbuseException {
