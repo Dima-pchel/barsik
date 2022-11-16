@@ -1,9 +1,7 @@
 package ru.kets.barsik.command;
 
-import discord4j.core.object.entity.Message;
+import net.dv8tion.jda.api.entities.Message;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import ru.kets.barsik.helper.CommandHelper;
 import ru.kets.barsik.repo.BanReasonRepo;
@@ -17,9 +15,6 @@ import static ru.kets.barsik.helper.CommandHelper.generateRandomNumber;
 
 @Component("ban")
 public class BanCommandHandler implements MessageCommandHandler {
-
-    Logger LOG = LoggerFactory.getLogger(BanCommandHandler.class);
-
     private static final String COMMAND_NAME = "ban";
 
     @Resource
@@ -28,15 +23,15 @@ public class BanCommandHandler implements MessageCommandHandler {
     @Override
     public String command(Message eventMessage) {
         if (1 == generateRandomNumber(15)) {
-            return String.format(getBanReason(), "<@" + eventMessage.getAuthor().get().getId().asString() + ">");
+            return String.format(getBanReason(), "<@" + eventMessage.getAuthor().getId() + ">");
         }
-        String content = eventMessage.getContent();
+        String content = eventMessage.getContentRaw();
         String user = CommandHelper.extractMessage(content, COMMAND_NAME);
         if (StringUtils.isNotBlank(user) && user.startsWith("<@")) {
             return String.format(getBanReason(), user);
         }
 
-        return "<@" + eventMessage.getAuthor().get().getId().asString() + "> has been banned for having too broken hands";
+        return "<@" + eventMessage.getAuthor().getId() + "> has been banned for having too broken hands";
     }
 
     private String getBanReason() {

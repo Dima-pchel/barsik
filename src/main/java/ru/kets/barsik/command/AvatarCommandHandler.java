@@ -1,17 +1,16 @@
 package ru.kets.barsik.command;
 
-import discord4j.core.object.entity.Message;
-import discord4j.core.object.entity.PartialMember;
-import discord4j.rest.util.Image;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.User;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import ru.kets.barsik.helper.CommandHelper;
 
-import java.util.Optional;
-
-import static ru.kets.barsik.constant.Constants.*;
+import static ru.kets.barsik.constant.Constants.ERROR_MESSAGE;
+import static ru.kets.barsik.constant.Constants.IMAGE_SIZE_PARAMETER;
 
 @Component("avatar")
 public class AvatarCommandHandler implements MessageCommandHandler {
@@ -22,14 +21,17 @@ public class AvatarCommandHandler implements MessageCommandHandler {
 
     @Override
     public String command(Message eventMessage) {
-        String user = CommandHelper.extractMessage(eventMessage.getContent(), COMMAND_NAME);
-        if (StringUtils.isNotBlank(user) && user.startsWith("<@")) {
-            for (PartialMember memberMention : eventMessage.getMemberMentions()) {
-                if (user.contains(memberMention.getId().asString())) {
-                    LOG.info(memberMention.getAvatarUrl());
-                    Optional<String> avatarUrl = memberMention.getAvatarUrl(Image.Format.WEB_P);
-                    if (avatarUrl.isPresent()) {
-                        return avatarUrl.get() + IMAGE_SIZE_PARAMETER;
+        String userId = CommandHelper.extractMessage(eventMessage.getContentRaw(), COMMAND_NAME);
+        //TODO this
+        if (StringUtils.isNotBlank(userId) && userId.startsWith("<@")) {
+            eventMessage.getGuild().getMembers();
+            for (Member memberMention : eventMessage.getGuild().getMembers()) {
+                if (userId.contains(memberMention.getId())) {
+                    User user = memberMention.getUser();
+                    String avatarUrl = user.getAvatarId();
+                    LOG.info(avatarUrl);
+                    if (StringUtils.isNotEmpty(avatarUrl)) {
+                        return user.getAvatarUrl() + IMAGE_SIZE_PARAMETER;
                     }
                 }
             }

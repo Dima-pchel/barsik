@@ -1,10 +1,10 @@
-package ru.kets.barsik.event;
+package ru.kets.barsik.event.d4j;
 
 import discord4j.core.event.domain.Event;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Mono;
-
+@Deprecated
 public interface EventListener<T extends Event> {
 
     Logger LOG = LoggerFactory.getLogger(EventListener.class);
