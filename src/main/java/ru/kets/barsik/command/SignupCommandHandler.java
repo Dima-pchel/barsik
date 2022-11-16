@@ -1,6 +1,6 @@
 package ru.kets.barsik.command;
 
-import discord4j.core.object.entity.Message;
+import net.dv8tion.jda.api.entities.Message;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Component;
 import ru.kets.barsik.exception.ExtractCommandException;
@@ -22,7 +22,7 @@ public class SignupCommandHandler implements MessageCommandHandler {
 
     @Override
     public String command(Message eventMessage) {
-        String content = eventMessage.getContent();
+        String content = eventMessage.getContentRaw();
         String subCommand = CommandHelper.extractMessage(content, COMMAND_NAME);
         try {
             Pair<String, String> commandPair = CommandHelper.extractCommand(subCommand);
@@ -58,7 +58,7 @@ public class SignupCommandHandler implements MessageCommandHandler {
                     return signup.toString();
                 // barsik add {role}
                 case "add":
-                    List<Signup> signups = signupRepo.findSignupsByChannelIdAndActive(eventMessage.getChannelId().asString(), true);
+                    List<Signup> signups = signupRepo.findSignupsByChannelIdAndActive(eventMessage.getChannel().getId(), true);
                     if(signups.size() < 1) {
                         return "error no active";
                     }
