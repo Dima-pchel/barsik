@@ -1,6 +1,6 @@
 package ru.kets.barsik.command;
 
-import discord4j.core.object.entity.Message;
+import net.dv8tion.jda.api.entities.Message;
 import org.springframework.stereotype.Component;
 
 @Component("speak")

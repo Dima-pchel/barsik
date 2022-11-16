@@ -1,11 +1,9 @@
-package ru.kets.barsik.event;
+package ru.kets.barsik.event.d4j;
 
 import discord4j.core.event.domain.message.MessageCreateEvent;
-import discord4j.core.object.entity.Message;
-import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
-@Service
+@Deprecated
 public class MessageCreateListener extends MessageListener implements EventListener<MessageCreateEvent> {
 
     @Override

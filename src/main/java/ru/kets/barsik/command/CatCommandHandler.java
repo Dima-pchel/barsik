@@ -1,6 +1,6 @@
 package ru.kets.barsik.command;
 
-import discord4j.core.object.entity.Message;
+import net.dv8tion.jda.api.entities.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.kets.barsik.integrations.CatClient;

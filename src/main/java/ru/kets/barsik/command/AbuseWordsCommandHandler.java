@@ -1,6 +1,6 @@
 package ru.kets.barsik.command;
 
-import discord4j.core.object.entity.Message;
+import net.dv8tion.jda.api.entities.Message;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import ru.kets.barsik.helper.CommandHelper;
@@ -20,7 +20,7 @@ public class AbuseWordsCommandHandler implements MessageCommandHandler{
 
     @Override
     public String command(Message eventMessage) {
-        String message = CommandHelper.extractMessage(eventMessage.getContent(), COMMAND_NAME);
+        String message = CommandHelper.extractMessage(eventMessage.getContentRaw(), COMMAND_NAME);
         String[] split = message.split(",");
         List<Word> words = new ArrayList<>();
         for (String w : split) {
