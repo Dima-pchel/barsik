@@ -1,8 +1,9 @@
-package ru.kets.barsik.command;
+package ru.kets.barsik.command.impl;
 
 import net.dv8tion.jda.api.entities.Message;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
+import ru.kets.barsik.command.MessageCommandHandler;
 import ru.kets.barsik.helper.CommandHelper;
 import ru.kets.barsik.repo.WordRepo;
 import ru.kets.barsik.repo.pojo.Word;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component("abuseadd")
-public class AbuseWordsCommandHandler implements MessageCommandHandler{
+public class AbuseWordsCommandHandler implements MessageCommandHandler {
 
     @Resource
     WordRepo wordRepo;

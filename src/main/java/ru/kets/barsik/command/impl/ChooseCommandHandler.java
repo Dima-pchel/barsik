@@ -1,10 +1,11 @@
-package ru.kets.barsik.command;
+package ru.kets.barsik.command.impl;
 
 import net.dv8tion.jda.api.entities.Message;
 import org.springframework.stereotype.Component;
+import ru.kets.barsik.command.MessageCommandHandler;
 import ru.kets.barsik.helper.CommandHelper;
 
-import static ru.kets.barsik.constant.Constants.ERROR_MESSAGE;
+import static ru.kets.barsik.integrations.constant.Constants.ERROR_MESSAGE;
 
 @Component("choose")
 public class ChooseCommandHandler implements MessageCommandHandler {

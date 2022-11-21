@@ -11,7 +11,7 @@ public class Signup {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Role> roles;
     @Column(unique = true)
     private String name;
@@ -20,6 +20,8 @@ public class Signup {
     private String channelId;
 
     private Boolean active;
+
+    private String imageLink;
 
     public Long getId() {
         return id;
@@ -75,5 +77,13 @@ public class Signup {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
     }
 }

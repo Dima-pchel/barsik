@@ -1,9 +1,10 @@
-package ru.kets.barsik.command;
+package ru.kets.barsik.command.impl;
 
 import net.dv8tion.jda.api.entities.Message;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Component;
+import ru.kets.barsik.command.MessageCommandHandler;
 import ru.kets.barsik.exception.ExtractCommandException;
 import ru.kets.barsik.helper.CommandHelper;
 import ru.kets.barsik.repo.BanReasonRepo;

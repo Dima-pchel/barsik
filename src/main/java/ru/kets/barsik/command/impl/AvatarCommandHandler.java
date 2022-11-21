@@ -1,4 +1,4 @@
-package ru.kets.barsik.command;
+package ru.kets.barsik.command.impl;
 
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
@@ -7,10 +7,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import ru.kets.barsik.command.MessageCommandHandler;
 import ru.kets.barsik.helper.CommandHelper;
 
-import static ru.kets.barsik.constant.Constants.ERROR_MESSAGE;
-import static ru.kets.barsik.constant.Constants.IMAGE_SIZE_PARAMETER;
+import static ru.kets.barsik.integrations.constant.Constants.ERROR_MESSAGE;
+import static ru.kets.barsik.integrations.constant.Constants.IMAGE_SIZE_PARAMETER;
 
 @Component("avatar")
 public class AvatarCommandHandler implements MessageCommandHandler {

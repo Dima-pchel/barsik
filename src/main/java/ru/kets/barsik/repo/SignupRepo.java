@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface SignupRepo extends JpaRepository<Signup, Long> {
 
+    Signup findSignupByChannelId(String channelId);
+
     Signup findSignupByNameAndChannelId(String name, String channelId);
 
     Signup findSignupByName(String name);
