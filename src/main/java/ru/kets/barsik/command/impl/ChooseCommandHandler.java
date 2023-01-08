@@ -1,10 +1,11 @@
-package ru.kets.barsik.command;
+package ru.kets.barsik.command.impl;
 
-import discord4j.core.object.entity.Message;
+import net.dv8tion.jda.api.entities.Message;
 import org.springframework.stereotype.Component;
+import ru.kets.barsik.command.MessageCommandHandler;
 import ru.kets.barsik.helper.CommandHelper;
 
-import static ru.kets.barsik.constant.Constants.ERROR_MESSAGE;
+import static ru.kets.barsik.integrations.constant.Constants.ERROR_MESSAGE;
 
 @Component("choose")
 public class ChooseCommandHandler implements MessageCommandHandler {
@@ -12,7 +13,7 @@ public class ChooseCommandHandler implements MessageCommandHandler {
 
     @Override
     public String command(Message eventMessage) {
-        String choose = CommandHelper.extractMessage(eventMessage.getContent(), COMMAND_NAME);
+        String choose = CommandHelper.extractMessage(eventMessage.getContentRaw(), COMMAND_NAME);
         String[] variants = choose.split(",");
         if (variants.length > 0) {
             int index = (int) (Math.random() * (variants.length));

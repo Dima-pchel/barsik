@@ -4,13 +4,12 @@ import discord4j.core.DiscordClientBuilder;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.Event;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import ru.kets.barsik.event.EventListener;
+import ru.kets.barsik.event.d4j.EventListener;
 
 import java.util.List;
 
-@Configuration
+@Deprecated
+//TODO remove this
 public class BotConfiguration {
 
     @Value("${token}")
@@ -18,7 +17,6 @@ public class BotConfiguration {
 
     private GatewayDiscordClient client;
 
-    @Bean
     public <T extends Event> GatewayDiscordClient gatewayDiscordClient(List<EventListener<T>> eventListeners) {
         GatewayDiscordClient client = getGatewayDiscordClient();
 
@@ -33,7 +31,6 @@ public class BotConfiguration {
         return client;
     }
 
-    @Bean
     public GatewayDiscordClient getGatewayDiscordClient() {
         if (this.client == null) {
             GatewayDiscordClient client = DiscordClientBuilder.create(token)

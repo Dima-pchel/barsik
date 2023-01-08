@@ -1,16 +1,13 @@
-package ru.kets.barsik.event;
+package ru.kets.barsik.event.d4j;
 
-import discord4j.core.GatewayDiscordClient;
 import discord4j.core.object.entity.Message;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import reactor.core.publisher.Mono;
 import ru.kets.barsik.command.MessageCommandHandler;
 import ru.kets.barsik.exception.AbuseException;
-import ru.kets.barsik.helper.LastMessage;
 import ru.kets.barsik.repo.WordRepo;
 import ru.kets.barsik.repo.pojo.Word;
 
@@ -18,8 +15,9 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
-import static ru.kets.barsik.constant.Constants.*;
+import static ru.kets.barsik.integrations.constant.Constants.*;
 
+@Deprecated
 public abstract class MessageListener {
     Logger LOG = LoggerFactory.getLogger(MessageListener.class);
 
@@ -29,9 +27,9 @@ public abstract class MessageListener {
     @Resource
     WordRepo wordRepo;
 
-    @Qualifier("getGatewayDiscordClient")
-    @Autowired
-    GatewayDiscordClient client;
+//    @Qualifier("getGatewayDiscordClient")
+//    @Autowired
+//    GatewayDiscordClient client;
 
     public Mono<Void> processCommand(Message eventMessage) {
         try {
@@ -44,17 +42,18 @@ public abstract class MessageListener {
                     .flatMap(channel -> channel.createMessage(getMessage(eventMessage)))
                     .then();
         } catch (AbuseException ae) {
-            return Mono.just(eventMessage)
-                    .flatMap(Message::getChannel)
-                    .flatMap(channel -> channel.createMessage(NO_U_EMOJI))
-                    .then();
+            return sendAnswer(eventMessage, NO_U_EMOJI);
         } catch (Exception e) {
             LOG.error("Capitan we have a problem :" + e.getMessage(), e);
-            return Mono.just(eventMessage)
-                    .flatMap(Message::getChannel)
-                    .flatMap(channel -> channel.createMessage(ERROR_MESSAGE))
-                    .then();
+            return sendAnswer(eventMessage, ERROR_MESSAGE);
         }
+    }
+
+    private static Mono<Void> sendAnswer(Message eventMessage, String message) {
+        return Mono.just(eventMessage)
+                .flatMap(Message::getChannel)
+                .flatMap(channel -> channel.createMessage(message))
+                .then();
     }
 
     private void validateMessage(Message eventMessage) throws AbuseException {
@@ -71,16 +70,16 @@ public abstract class MessageListener {
     }
 
     private String getMessage(Message message) {
-        String content = message.getContent();
-        String[] commands = content.split(" ");
-        if (commands.length > 1) {
-            MessageCommandHandler discordCommand = commandMap.get(commands[1].toLowerCase());
-            if (discordCommand != null) {
-                String command = discordCommand.command(message);
-                LastMessage.addLastMessage(command, message.getAuthor().get().getUsername());
-                return command;
-            }
-        }
+//        String content = message.getContent();
+//        String[] commands = content.split(" ");
+//        if (commands.length > 1) {
+//            MessageCommandHandler discordCommand = commandMap.get(commands[1].toLowerCase());
+//            if (discordCommand != null) {
+//                String command = discordCommand.command(message);
+//                LastMessage.addLastMessage(command, message.getAuthor().get().getUsername());
+//                return command;
+//            }
+//        }
         return ERROR_MESSAGE;
     }
 

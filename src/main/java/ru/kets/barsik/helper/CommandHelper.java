@@ -6,8 +6,8 @@ import ru.kets.barsik.exception.ExtractCommandException;
 
 import java.util.Optional;
 
-import static ru.kets.barsik.constant.Constants.COMMAND_PREFIX;
-import static ru.kets.barsik.constant.Constants.ERROR_MESSAGE;
+import static ru.kets.barsik.integrations.constant.Constants.COMMAND_PREFIX;
+import static ru.kets.barsik.integrations.constant.Constants.ERROR_MESSAGE;
 
 public class CommandHelper {
 

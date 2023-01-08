@@ -1,16 +1,16 @@
-package ru.kets.barsik.command;
+package ru.kets.barsik.command.impl;
 
-import discord4j.core.object.entity.Message;
+import net.dv8tion.jda.api.entities.Message;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Component;
+import ru.kets.barsik.command.MessageCommandHandler;
 import ru.kets.barsik.exception.ExtractCommandException;
 import ru.kets.barsik.helper.CommandHelper;
 import ru.kets.barsik.repo.BanReasonRepo;
 import ru.kets.barsik.repo.pojo.BanReason;
 
 import javax.annotation.Resource;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,7 +26,7 @@ public class BanReasonCommandHandler implements MessageCommandHandler {
     @Override
     public String command(Message eventMessage) {
         // barsik banreason add %s is not good man!!
-        String content = eventMessage.getContent();
+        String content = eventMessage.getContentRaw();
         String subCommand = CommandHelper.extractMessage(content, COMMAND_NAME);
         try {
             Pair<String, String> commandPair = CommandHelper.extractCommand(subCommand);

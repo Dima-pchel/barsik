@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import ru.kets.barsik.integrations.pojo.CatMessage;
 
-import static ru.kets.barsik.constant.Constants.ERROR_MESSAGE;
+import static ru.kets.barsik.integrations.constant.Constants.ERROR_MESSAGE;
 
 @Component
 public class CatClient extends AbstractImageClient implements ImageClient{
