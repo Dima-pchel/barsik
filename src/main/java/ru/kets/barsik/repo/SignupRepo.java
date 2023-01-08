@@ -9,6 +9,8 @@ public interface SignupRepo extends JpaRepository<Signup, Long> {
 
     Signup findSignupByChannelId(String channelId);
 
+    Signup findSignupByNameAndPattern(String name, boolean pattern);
+
     Signup findSignupByNameAndChannelId(String name, String channelId);
 
     Signup findSignupByName(String name);

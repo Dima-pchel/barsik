@@ -9,7 +9,9 @@ public interface SignupService {
 
     MessageEmbed getSignupByChannel(MessageChannelUnion channel) throws EmbedCommandException;
 
-    MessageEmbed createSignup(MessageChannelUnion channel) throws EmbedCommandException;
+    MessageEmbed createSignup(MessageChannelUnion channel, String name) throws EmbedCommandException;
+
+    MessageEmbed saveSignupPattern(MessageChannelUnion channel, String name) throws EmbedCommandException;
 
     MessageEmbed addUser(MessageChannelUnion channel, User author, String right) throws EmbedCommandException;
 
@@ -18,4 +20,12 @@ public interface SignupService {
     MessageEmbed setNote(MessageChannelUnion channel, String note) throws EmbedCommandException;
 
     MessageEmbed setImage(MessageChannelUnion channel, String imgUrl) throws EmbedCommandException;
+
+    MessageEmbed setThumbnail(MessageChannelUnion channel, String imgUrl) throws EmbedCommandException;
+
+    MessageEmbed addRole(MessageChannelUnion channel, String roleName) throws EmbedCommandException;
+
+    MessageEmbed removeRole(MessageChannelUnion channel, String role) throws EmbedCommandException;
+
+    MessageEmbed removeUser(MessageChannelUnion channel, User author) throws EmbedCommandException;
 }
