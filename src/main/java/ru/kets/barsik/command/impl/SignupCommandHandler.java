@@ -84,6 +84,7 @@ public class SignupCommandHandler implements EmbedCommandHandler {
         List<MessageEmbed.Field> fieldList = new ArrayList<>();
 
         fieldList.add(new MessageEmbed.Field("barsik signup create {name}", "- create new signup from pattern {name}. If pattern not found return empty signup.", false, false));
+        fieldList.add(new MessageEmbed.Field("barsik signup role {roleName}", "- create and add to signup new empty role with {roleName} name.", false, false));
         fieldList.add(new MessageEmbed.Field("barsik signup save {name}", "- save current signup as pattern with name {name}.", false, false));
         fieldList.add(new MessageEmbed.Field("barsik signup add {role}}", "- attach current user to role with name {role}. If role not found or not empty - create new role with {role} name.", false, false));
         fieldList.add(new MessageEmbed.Field("barsik signup exit", "- remove current user from all roles.", false, false));
