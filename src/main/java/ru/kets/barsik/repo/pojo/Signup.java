@@ -26,6 +26,8 @@ public class Signup {
 
     private boolean pattern;
 
+    private boolean notificated;
+
     public Long getId() {
         return id;
     }
@@ -104,5 +106,13 @@ public class Signup {
 
     public void setPattern(boolean pattern) {
         this.pattern = pattern;
+    }
+
+    public boolean isNotificated() {
+        return notificated;
+    }
+
+    public void setNotificated(boolean notificated) {
+        this.notificated = notificated;
     }
 }

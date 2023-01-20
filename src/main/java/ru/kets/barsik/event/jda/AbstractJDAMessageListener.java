@@ -1,8 +1,6 @@
 package ru.kets.barsik.event.jda;
 
-import net.dv8tion.jda.api.entities.EmbedType;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.channel.unions.MessageChannelUnion;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.apache.commons.lang3.StringUtils;
@@ -18,7 +16,6 @@ import ru.kets.barsik.repo.WordRepo;
 import ru.kets.barsik.repo.pojo.Word;
 
 import javax.annotation.Resource;
-import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
 

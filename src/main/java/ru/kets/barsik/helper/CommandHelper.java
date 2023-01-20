@@ -32,6 +32,11 @@ public class CommandHelper {
         }
     }
 
+    public static String extractUser(String user) {
+        String extracted = StringUtils.remove(user, "<@");
+        return StringUtils.remove(extracted, ">");
+    }
+
     public static int generateRandomNumber(int max) {
         return (int) (Math.random() * max);
     }

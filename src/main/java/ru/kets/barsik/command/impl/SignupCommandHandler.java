@@ -17,8 +17,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ru.kets.barsik.integrations.constant.Constants.ERROR_MESSAGE_WITH_HELP_ADVICE;
-import static ru.kets.barsik.integrations.constant.Constants.SMART_CAT_IMG_LINK;
+import static ru.kets.barsik.integrations.constant.Constants.*;
 
 @Component("signup")
 public class SignupCommandHandler implements EmbedCommandHandler {
@@ -45,10 +44,10 @@ public class SignupCommandHandler implements EmbedCommandHandler {
                     return signupService.saveSignupPattern(eventMessage.getChannel(), commandPair.getRight());
                 // barsik signup add {role}
                 case "add":
-                    return signupService.addUser(eventMessage.getChannel(), eventMessage.getAuthor(), commandPair.getRight());
+                    return signupService.addUser(eventMessage.getChannel(), eventMessage.getAuthor().getId(), commandPair.getRight());
                 // barsik signup exit
                 case "exit":
-                    return signupService.removeUser(eventMessage.getChannel(), eventMessage.getAuthor());
+                    return signupService.removeUser(eventMessage.getChannel(), eventMessage.getAuthor(), null);
                 // barsik signup remove {role}
                 case "remove":
                     return signupService.removeRole(eventMessage.getChannel(), commandPair.getRight());
@@ -72,7 +71,7 @@ public class SignupCommandHandler implements EmbedCommandHandler {
                     return signupService.setThumbnail(eventMessage.getChannel(), commandPair.getRight());
                 // barsik signup help
                 case "help":
-                    return getHellpEmbed();
+                    return getHelpEmbed();
             }
         } catch (ExtractCommandException e) {
             LOG.error(e.getMessage(), e);
@@ -80,13 +79,13 @@ public class SignupCommandHandler implements EmbedCommandHandler {
         throw new EmbedCommandException(ERROR_MESSAGE_WITH_HELP_ADVICE);
     }
 
-    private MessageEmbed getHellpEmbed() {
+    private MessageEmbed getHelpEmbed() {
         List<MessageEmbed.Field> fieldList = new ArrayList<>();
 
         fieldList.add(new MessageEmbed.Field("barsik signup create {name}", "- create new signup from pattern {name}. If pattern not found return empty signup.", false, false));
         fieldList.add(new MessageEmbed.Field("barsik signup role {roleName}", "- create and add to signup new empty role with {roleName} name.", false, false));
         fieldList.add(new MessageEmbed.Field("barsik signup save {name}", "- save current signup as pattern with name {name}.", false, false));
-        fieldList.add(new MessageEmbed.Field("barsik signup add {role}}", "- attach current user to role with name {role}. If role not found or not empty - create new role with {role} name.", false, false));
+        fieldList.add(new MessageEmbed.Field("barsik signup add {role}", "- attach current user to role with name {role}. If role not found or not empty - create new role with {role} name.", false, false));
         fieldList.add(new MessageEmbed.Field("barsik signup exit", "- remove current user from all roles.", false, false));
         fieldList.add(new MessageEmbed.Field("barsik signup remove {role}", "- remove role by name (first will be deleted empty role).", false, false));
         fieldList.add(new MessageEmbed.Field("barsik signup show", "- show current signup in channel.", false, false));
@@ -98,7 +97,7 @@ public class SignupCommandHandler implements EmbedCommandHandler {
         MessageEmbed.ImageInfo img = new MessageEmbed.ImageInfo(SMART_CAT_IMG_LINK, SMART_CAT_IMG_LINK, 200, 200);
 
         return new MessageEmbed(null, "Signup Helper",
-                null, EmbedType.RICH, null, 122900,
+                null, EmbedType.RICH, null, HELP_COLOR,
                 null, null, null, null, null, img, fieldList);
     }
 }

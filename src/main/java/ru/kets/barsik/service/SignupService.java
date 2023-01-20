@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.unions.MessageChannelUnion;
 import ru.kets.barsik.exception.EmbedCommandException;
+import ru.kets.barsik.repo.pojo.Signup;
 
 public interface SignupService {
 
@@ -13,7 +14,7 @@ public interface SignupService {
 
     MessageEmbed saveSignupPattern(MessageChannelUnion channel, String name) throws EmbedCommandException;
 
-    MessageEmbed addUser(MessageChannelUnion channel, User author, String right) throws EmbedCommandException;
+    MessageEmbed addUser(MessageChannelUnion channel, String member, String right) throws EmbedCommandException;
 
     MessageEmbed setDate(MessageChannelUnion channel, String date) throws EmbedCommandException;
 
@@ -27,5 +28,7 @@ public interface SignupService {
 
     MessageEmbed removeRole(MessageChannelUnion channel, String role) throws EmbedCommandException;
 
-    MessageEmbed removeUser(MessageChannelUnion channel, User author) throws EmbedCommandException;
+    MessageEmbed removeUser(MessageChannelUnion channel, User author, String role) throws EmbedCommandException;
+
+    MessageEmbed createEmbed(Signup signup) throws EmbedCommandException;
 }

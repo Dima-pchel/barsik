@@ -1,0 +1,143 @@
+[
+  {
+    "name": "blep",
+    "type": 1,
+    "description": "Send a random adorable animal photo",
+    "options": [
+      {
+        "name": "animal",
+        "description": "The type of animal",
+        "type": 3,
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "add",
+    "type": 1,
+    "description": "add you to current active signup",
+    "options": [
+      {
+        "name": "role",
+        "description": "choose role",
+        "type": 3,
+        "required": true
+      },
+      {
+        "name": "member",
+        "description": "choose member for role",
+        "type": 3,
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "role",
+    "type": 1,
+    "description": "add role to active signup",
+    "options": [
+      {
+        "name": "role",
+        "description": "choose role",
+        "type": 3,
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "create",
+    "type": 1,
+    "description": "Create new signup",
+    "options": [
+      {
+        "name": "name",
+        "description": "signups name",
+        "type": 3,
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "exit",
+    "type": 1,
+    "description": "Exit from current signup",
+    "options": [
+      {
+        "name": "role",
+        "description": "if you want leave only 1 role",
+        "type": 3,
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "remove",
+    "type": 1,
+    "description": "remove role from signup",
+    "options": [
+      {
+        "name": "role",
+        "description": "role name for deleting",
+        "type": 3,
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "show",
+    "type": 1,
+    "description": "show current signup"
+  },
+  {
+    "name": "date",
+    "type": 1,
+    "description": "set date to current signup. Use pattern yyyy-MM-dd HH:mm",
+    "options": [
+      {
+        "name": "date",
+        "description": "role name for deleting",
+        "type": 3,
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "note",
+    "type": 1,
+    "description": "set note to current signup. Use pattern yyyy-MM-dd HH:mm",
+    "options": [
+      {
+        "name": "note",
+        "description": "note",
+        "type": 3,
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "image",
+    "type": 1,
+    "description": "set image to current signup. Use pattern yyyy-MM-dd HH:mm",
+    "options": [
+      {
+        "name": "image",
+        "description": "image link",
+        "type": 3,
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "thumbnail",
+    "type": 1,
+    "description": "set thumbnail to current signup. Use pattern yyyy-MM-dd HH:mm",
+    "options": [
+      {
+        "name": "thumbnail",
+        "description": "thumbnail link",
+        "type": 3,
+        "required": true
+      }
+    ]
+  }
+]

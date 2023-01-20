@@ -96,7 +96,7 @@ public class SignupServiceImpl implements SignupService {
     }
 
     @Override
-    public MessageEmbed addUser(MessageChannelUnion channel, User user, String roleName) throws EmbedCommandException {
+    public MessageEmbed addUser(MessageChannelUnion channel, String user, String roleName) throws EmbedCommandException {
         final String correctedRoleName = correctRoleName(roleName);
         Signup signup = getSignup(channel);
         List<Role> roles = signup.getRoles();
@@ -106,10 +106,10 @@ public class SignupServiceImpl implements SignupService {
                 .filter(role -> StringUtils.isEmpty(role.getUser()) && correctedRoleName.equalsIgnoreCase(role.getRole()))
                 .findFirst();
         if (emptyRole.isPresent()) {
-            emptyRole.get().setUser(user.getId());
+            emptyRole.get().setUser(user);
         } else {
             Role role = new Role();
-            role.setUser(user.getId());
+            role.setUser(user);
             role.setRole(correctedRoleName);
             roles.add(role);
         }
@@ -122,6 +122,7 @@ public class SignupServiceImpl implements SignupService {
         try {
             Signup signup = getSignup(channel);
             signup.setDate(formatter.parse(date));
+            signup.setNotificated(false);
             signupRepo.save(signup);
             return createEmbed(signup);
         } catch (Exception e) {
@@ -206,8 +207,18 @@ public class SignupServiceImpl implements SignupService {
     }
 
     @Override
-    public MessageEmbed removeUser(MessageChannelUnion channel, User author) throws EmbedCommandException {
+    public MessageEmbed removeUser(MessageChannelUnion channel, User author, String selectedRole) throws EmbedCommandException {
         Signup signup = getSignup(channel);
+        if (StringUtils.isNotBlank(selectedRole)) {
+            for (Role role : signup.getRoles()) {
+                if (author.getId().equals(role.getUser()) && selectedRole.equalsIgnoreCase(role.getRole())) {
+                    role.setUser(null);
+                    roleRepo.save(role);
+                }
+            }
+            return createEmbed(getSignup(channel));
+        }
+
         for (Role role : signup.getRoles()) {
             if (author.getId().equals(role.getUser())) {
                 role.setUser(null);
@@ -247,22 +258,21 @@ public class SignupServiceImpl implements SignupService {
     }
 
 
-    private MessageEmbed createEmbed(Signup signup) throws EmbedCommandException {
+    @Override
+    public MessageEmbed createEmbed(Signup signup) throws EmbedCommandException {
         if (signup == null) {
             throw new EmbedCommandException("signup not found!!");
         }
 
         String name = StringUtils.isEmpty(signup.getName()) ? "signup" : signup.getName();
-        String formatDate = StringUtils.EMPTY;
         Date date = signup.getDate();
         OffsetDateTime offDateTime = null;
         if (date != null) {
-            formatDate = formatter.format(date);
             ZoneOffset zone = ZoneOffset.of(DEFAULT_TIME_ZONE);
             Instant inst = Instant.ofEpochMilli(date.getTime());
             offDateTime = OffsetDateTime.ofInstant(inst, zone);
         }
-        String description = createDescription(signup.getRoles(), formatDate);
+        String description = createDescription(signup.getRoles());
         MessageEmbed.ImageInfo img = null;
         if (StringUtils.isNotEmpty(signup.getImageLink())) {
             img = new MessageEmbed.ImageInfo(signup.getImageLink(), signup.getImageLink(), 100, 200);
@@ -292,15 +302,9 @@ public class SignupServiceImpl implements SignupService {
                 tail, null, null, null, footer, img, fieldList);
     }
 
-    private String createDescription(List<Role> roles, String formatDate) {
+    private String createDescription(List<Role> roles) {
         StringBuilder sb = new StringBuilder();
-        if (StringUtils.isNotEmpty(formatDate)) {
-            sb.append("Event date: ")
-                    .append(formatDate)
-                    .append(" (GMT+3 Moscow)")
-                    .append("\n")
-                    .append("\n");
-        }
+
         for (Role role : roles) {
             sb.append(role.getRole())
                     .append(" - ");
