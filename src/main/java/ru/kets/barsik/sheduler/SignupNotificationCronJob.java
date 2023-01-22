@@ -40,13 +40,11 @@ public class SignupNotificationCronJob {
 
     @Scheduled(fixedRate = 300000L)
     public void checkSignups() {
-        LOG.info("Start working");
         Date now = new Date();
         Date after = new Date(now.getTime() + (30 * 60 * 1000));
         JDA jda = botConfiguration.getJda();
         List<Signup> signups = ListUtils.emptyIfNull(signupRepo.findSignupsByDateBetweenAndNotificated(now, after,false));
-//        List<Signup> signups = ListUtils.emptyIfNull(signupRepo.findSignupByDateAfterAndNotificated(now, false));
-        LOG.info("signups found {}", signups.size());
+        LOG.debug("signups found {}", signups.size());
         for (Signup signup : signups) {
             TextChannel textChannelById = jda.getTextChannelById(signup.getChannelId());
             if (textChannelById != null) {

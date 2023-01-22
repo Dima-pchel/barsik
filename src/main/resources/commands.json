@@ -1,18 +1,5 @@
 [
   {
-    "name": "blep",
-    "type": 1,
-    "description": "Send a random adorable animal photo",
-    "options": [
-      {
-        "name": "animal",
-        "description": "The type of animal",
-        "type": 3,
-        "required": true
-      }
-    ]
-  },
-  {
     "name": "add",
     "type": 1,
     "description": "add you to current active signup",

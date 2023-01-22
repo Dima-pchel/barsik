@@ -16,7 +16,7 @@ import static ru.kets.barsik.integrations.constant.Constants.HELP_COLOR;
 public class HelpCommandHandler implements EmbedCommandHandler {
 
     private static final String COMMAND_NAME = "help";
-    private static final String WORLD_DOMINATION_CAT = "https://downloader.disk.yandex.ru/preview/97c8ae775829700ed4af809f3e576ebd9677c9e9e2b8577e666a8fcfbf2e1a91/63bbd40f/foCp0qlbq3QY5tfXBiqVJPtmKg9Tojpzor6YuEtozRQi_mQooppYrho6sadwU2z3iNZv5h3f7YPJMRh0h6s9xA%3D%3D?uid=0&filename=cat.png&disposition=inline&hash=&limit=0&content_type=image%2Fpng&owner_uid=0&tknv=v2&size=2048x2048";
+    private static final String WORLD_DOMINATION_CAT = "https://image.spreadshirtmedia.com/image-server/v1/compositions/T210A2PA4301PT17X11Y14D1021402054W30965H37158/views/1,width=550,height=550,appearanceId=2,backgroundColor=000000,noPt=true/cat-world-domination-kitty-kitten-funny-gift-mens-t-shirt.jpg";
 
     @Override
     public MessageEmbed command(Message eventMessage) throws EmbedCommandException {
