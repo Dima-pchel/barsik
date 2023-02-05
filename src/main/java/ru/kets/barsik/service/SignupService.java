@@ -1,7 +1,6 @@
 package ru.kets.barsik.service;
 
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.unions.MessageChannelUnion;
 import ru.kets.barsik.exception.EmbedCommandException;
 import ru.kets.barsik.repo.pojo.Signup;
@@ -28,7 +27,7 @@ public interface SignupService {
 
     MessageEmbed removeRole(MessageChannelUnion channel, String role) throws EmbedCommandException;
 
-    MessageEmbed removeUser(MessageChannelUnion channel, User author, String role) throws EmbedCommandException;
+    MessageEmbed removeUser(MessageChannelUnion channel, String userId, String role) throws EmbedCommandException;
 
     MessageEmbed createEmbed(Signup signup) throws EmbedCommandException;
 }

@@ -1,12 +1,14 @@
 package ru.kets.barsik.command.impl;
 
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import ru.kets.barsik.command.MessageCommandHandler;
 import ru.kets.barsik.helper.CommandHelper;
 import ru.kets.barsik.repo.BanReasonRepo;
 import ru.kets.barsik.repo.pojo.BanReason;
+import ru.kets.barsik.service.UserService;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -19,16 +21,23 @@ public class BanCommandHandler implements MessageCommandHandler {
     private static final String COMMAND_NAME = "ban";
 
     @Resource
-    BanReasonRepo reasonRepo;
+    private BanReasonRepo reasonRepo;
+
+    @Resource
+    private UserService userService;
 
     @Override
     public String command(Message eventMessage) {
         if (1 == generateRandomNumber(15)) {
+            userService.updateBanCount(eventMessage.getAuthor());
             return String.format(getBanReason(), "<@" + eventMessage.getAuthor().getId() + ">");
         }
         String content = eventMessage.getContentRaw();
         String user = CommandHelper.extractMessage(content, COMMAND_NAME);
         if (StringUtils.isNotBlank(user) && user.startsWith("<@")) {
+            String userId = CommandHelper.extractUser(user);
+            User discordUser = eventMessage.getGuild().getMemberById(userId).getUser();
+            userService.updateBanCount(discordUser);
             return String.format(getBanReason(), user);
         }
 

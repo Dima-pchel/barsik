@@ -4,6 +4,11 @@ public class Constants {
 
     public static final String COMMAND_PREFIX = "barsik";
     public static final String COMMAND_PREFIX_RU = "барсик";
+
+    public static final String KET_PREFIX = "ket";
+
+    public static final String KET_PREFIX_RU = "кот";
+
     public static final String ERROR_MESSAGE = "MEOW";
     public static final String ERROR_MESSAGE_WITH_HELP_ADVICE = "Wrong command! you can use help command and see more features.";
     public static final String IMAGE_SIZE_PARAMETER = "?size=480";

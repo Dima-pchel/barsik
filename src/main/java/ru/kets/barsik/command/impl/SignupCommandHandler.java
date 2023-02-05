@@ -47,7 +47,7 @@ public class SignupCommandHandler implements EmbedCommandHandler {
                     return signupService.addUser(eventMessage.getChannel(), eventMessage.getAuthor().getId(), commandPair.getRight());
                 // barsik signup exit
                 case "exit":
-                    return signupService.removeUser(eventMessage.getChannel(), eventMessage.getAuthor(), null);
+                    return signupService.removeUser(eventMessage.getChannel(), eventMessage.getAuthor().getId(), null);
                 // barsik signup remove {role}
                 case "remove":
                     return signupService.removeRole(eventMessage.getChannel(), commandPair.getRight());

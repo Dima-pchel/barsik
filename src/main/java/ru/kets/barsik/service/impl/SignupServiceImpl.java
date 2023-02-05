@@ -2,7 +2,6 @@ package ru.kets.barsik.service.impl;
 
 import net.dv8tion.jda.api.entities.EmbedType;
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.unions.MessageChannelUnion;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -207,11 +206,11 @@ public class SignupServiceImpl implements SignupService {
     }
 
     @Override
-    public MessageEmbed removeUser(MessageChannelUnion channel, User author, String selectedRole) throws EmbedCommandException {
+    public MessageEmbed removeUser(MessageChannelUnion channel, String userId, String selectedRole) throws EmbedCommandException {
         Signup signup = getSignup(channel);
         if (StringUtils.isNotBlank(selectedRole)) {
             for (Role role : signup.getRoles()) {
-                if (author.getId().equals(role.getUser()) && selectedRole.equalsIgnoreCase(role.getRole())) {
+                if (userId.equals(role.getUser()) && selectedRole.equalsIgnoreCase(role.getRole())) {
                     role.setUser(null);
                     roleRepo.save(role);
                 }
@@ -220,7 +219,7 @@ public class SignupServiceImpl implements SignupService {
         }
 
         for (Role role : signup.getRoles()) {
-            if (author.getId().equals(role.getUser())) {
+            if (userId.equals(role.getUser())) {
                 role.setUser(null);
                 roleRepo.save(role);
             }

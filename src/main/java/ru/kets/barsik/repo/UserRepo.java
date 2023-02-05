@@ -4,4 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import ru.kets.barsik.repo.pojo.User;
 
 public interface UserRepo extends JpaRepository<User, Long> {
+
+    User findUserByDiscordId(String discordId);
 }

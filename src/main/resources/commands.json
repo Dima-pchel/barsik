@@ -91,7 +91,7 @@
   {
     "name": "note",
     "type": 1,
-    "description": "set note to current signup. Use pattern yyyy-MM-dd HH:mm",
+    "description": "set note to current signup.",
     "options": [
       {
         "name": "note",
@@ -124,6 +124,25 @@
         "description": "thumbnail link",
         "type": 3,
         "required": true
+      }
+    ]
+  },
+  {
+    "name": "expel",
+    "type": 1,
+    "description": "expel selected user from signup",
+    "options": [
+      {
+        "name": "user",
+        "description": "user",
+        "type": 3,
+        "required": true
+      },
+      {
+        "name": "role",
+        "description": "role",
+        "type": 3,
+        "required": false
       }
     ]
   }

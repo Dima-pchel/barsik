@@ -20,7 +20,23 @@ public class User {
     private String channelId;
     private Integer discriminator;
 
+    private boolean bot;
+
+    private Long messageCount;
+
+    private Integer reportCount;
+
+    private Integer banCount;
+
     public User() {
+    }
+
+    public User(String discordId, String name) {
+        this.discordId = discordId;
+        this.name = name;
+        this.messageCount = 0L;
+        this.reportCount = 0;
+        this.banCount = 0;
     }
 
     public Long getId() {
@@ -61,5 +77,37 @@ public class User {
 
     public void setDiscriminator(Integer discriminator) {
         this.discriminator = discriminator;
+    }
+
+    public boolean isBot() {
+        return bot;
+    }
+
+    public void setBot(boolean bot) {
+        this.bot = bot;
+    }
+
+    public Long getMessageCount() {
+        return messageCount;
+    }
+
+    public void setMessageCount(Long messageCount) {
+        this.messageCount = messageCount;
+    }
+
+    public Integer getReportCount() {
+        return reportCount;
+    }
+
+    public void setReportCount(Integer reportCount) {
+        this.reportCount = reportCount;
+    }
+
+    public Integer getBanCount() {
+        return banCount;
+    }
+
+    public void setBanCount(Integer banCount) {
+        this.banCount = banCount;
     }
 }

@@ -14,6 +14,7 @@ import ru.kets.barsik.exception.EmbedCommandException;
 import ru.kets.barsik.helper.LastMessage;
 import ru.kets.barsik.repo.WordRepo;
 import ru.kets.barsik.repo.pojo.Word;
+import ru.kets.barsik.service.UserService;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -31,10 +32,14 @@ public class AbstractJDAMessageListener extends ListenerAdapter {
     Map<String, EmbedCommandHandler> embedCommandHandlerMap;
 
     @Resource
-    WordRepo wordRepo;
+    private WordRepo wordRepo;
+
+    @Resource
+    private UserService userService;
 
     public void processCommand(Message msg, MessageChannelUnion channel) {
         try {
+            userService.updateMessageCount(msg.getAuthor());
             validateMessage(msg);
             String content = msg.getContentRaw();
             LOG.debug(content);
@@ -84,23 +89,10 @@ public class AbstractJDAMessageListener extends ListenerAdapter {
         }
         List<Word> abuseWords = wordRepo.findWordsByType(Word.Type.ABUSE);
         if (abuseWords.stream().anyMatch(w ->
-                (content.toLowerCase().contains(COMMAND_PREFIX) || content.toLowerCase().contains(COMMAND_PREFIX_RU))
+                (content.toLowerCase().contains(COMMAND_PREFIX) || content.toLowerCase().contains(COMMAND_PREFIX_RU)
+                        || content.toLowerCase().contains(KET_PREFIX) || content.toLowerCase().contains(KET_PREFIX_RU))
                         && content.toLowerCase().contains(w.getWord().toLowerCase()))) {
             throw new AbuseException();
         }
-    }
-
-    private String getMessage(Message message) {
-        String content = message.getContentRaw();
-        String[] commands = content.split(" ");
-        if (commands.length > 1) {
-            MessageCommandHandler discordCommand = messageCommandMap.get(commands[1].toLowerCase());
-            if (discordCommand != null) {
-                String command = discordCommand.command(message);
-                LastMessage.addLastMessage(command, message.getAuthor().getName());
-                return command;
-            }
-        }
-        return ERROR_MESSAGE;
     }
 }

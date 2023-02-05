@@ -12,6 +12,6 @@ public class SlashExitSignupCommandHandler extends AbstractSlashSignupCommandHan
     @Override
     MessageEmbed processCommand(SlashCommandInteractionEvent event) throws EmbedCommandException {
         String role = event.getOption("role") != null ? event.getOption("role").getAsString() : StringUtils.EMPTY;
-        return getSignupService().removeUser(event.getChannel(), event.getUser(), role);
+        return getSignupService().removeUser(event.getChannel(), event.getUser().getId(), role);
     }
 }
