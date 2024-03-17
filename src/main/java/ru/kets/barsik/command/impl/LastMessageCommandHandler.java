@@ -6,9 +6,10 @@ import org.springframework.stereotype.Component;
 import ru.kets.barsik.command.MessageCommandHandler;
 import ru.kets.barsik.helper.LastMessage;
 
-import static ru.kets.barsik.integrations.constant.Constants.ERROR_MESSAGE;
+import static ru.kets.barsik.constant.Constants.CommandName.AGAIN_COMMAND_NAME;
+import static ru.kets.barsik.constant.Constants.ERROR_MESSAGE;
 
-@Component("again")
+@Component(AGAIN_COMMAND_NAME)
 public class LastMessageCommandHandler implements MessageCommandHandler {
 
     @Override

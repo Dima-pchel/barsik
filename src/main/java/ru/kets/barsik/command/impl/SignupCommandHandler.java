@@ -17,12 +17,11 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ru.kets.barsik.integrations.constant.Constants.*;
+import static ru.kets.barsik.constant.Constants.*;
+import static ru.kets.barsik.constant.Constants.CommandName.SIGNUP_COMMAND_NAME;
 
-@Component("signup")
+@Component(SIGNUP_COMMAND_NAME)
 public class SignupCommandHandler implements EmbedCommandHandler {
-
-    private static final String COMMAND_NAME = "signup";
 
     Logger LOG = LoggerFactory.getLogger(SignupCommandHandler.class);
 
@@ -32,7 +31,7 @@ public class SignupCommandHandler implements EmbedCommandHandler {
     @Override
     public MessageEmbed command(Message eventMessage) throws EmbedCommandException {
         String content = eventMessage.getContentRaw();
-        String subCommand = CommandHelper.extractMessage(content, COMMAND_NAME);
+        String subCommand = CommandHelper.extractMessage(content, SIGNUP_COMMAND_NAME);
         try {
             Pair<String, String> commandPair = CommandHelper.extractCommand(subCommand);
             switch (commandPair.getLeft()) {

@@ -6,7 +6,9 @@ import org.springframework.stereotype.Component;
 import ru.kets.barsik.command.MessageCommandHandler;
 import ru.kets.barsik.integrations.DogClient;
 
-@Component("friend")
+import static ru.kets.barsik.constant.Constants.CommandName.FRIEND_COMMAND_NAME;
+
+@Component(FRIEND_COMMAND_NAME)
 public class FriendCommandHandler implements MessageCommandHandler {
 
     @Autowired

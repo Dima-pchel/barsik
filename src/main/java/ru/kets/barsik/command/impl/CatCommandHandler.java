@@ -6,7 +6,9 @@ import org.springframework.stereotype.Component;
 import ru.kets.barsik.command.MessageCommandHandler;
 import ru.kets.barsik.integrations.CatClient;
 
-@Component("cat")
+import static ru.kets.barsik.constant.Constants.CommandName.CAT_COMMAND_NAME;
+
+@Component(CAT_COMMAND_NAME)
 public class CatCommandHandler implements MessageCommandHandler {
 
     @Autowired

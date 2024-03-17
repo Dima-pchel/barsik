@@ -12,16 +12,17 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component("abuseadd")
+import static ru.kets.barsik.constant.Constants.CommandName.ABUSE_WORDS_COMMAND_NAME;
+
+@Component(ABUSE_WORDS_COMMAND_NAME)
 public class AbuseWordsCommandHandler implements MessageCommandHandler {
 
     @Resource
     WordRepo wordRepo;
-    private static final String COMMAND_NAME = "abuseadd";
 
     @Override
     public String command(Message eventMessage) {
-        String message = CommandHelper.extractMessage(eventMessage.getContentRaw(), COMMAND_NAME);
+        String message = CommandHelper.extractMessage(eventMessage.getContentRaw(), ABUSE_WORDS_COMMAND_NAME);
         String[] split = message.split(",");
         List<Word> words = new ArrayList<>();
         for (String w : split) {

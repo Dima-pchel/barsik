@@ -6,7 +6,9 @@ import org.springframework.stereotype.Component;
 import ru.kets.barsik.command.MessageCommandHandler;
 import ru.kets.barsik.integrations.AnswerClient;
 
-@Component("answer")
+import static ru.kets.barsik.constant.Constants.CommandName.ANSWER_COMMAND_NAME;
+
+@Component(ANSWER_COMMAND_NAME)
 public class AnswerCommandHandler implements MessageCommandHandler {
 
     @Autowired

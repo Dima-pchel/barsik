@@ -24,7 +24,7 @@ import java.time.ZoneOffset;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static ru.kets.barsik.integrations.constant.Constants.*;
+import static ru.kets.barsik.constant.Constants.*;
 
 @Service
 public class SignupServiceImpl implements SignupService {

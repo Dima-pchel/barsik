@@ -20,7 +20,7 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
-import static ru.kets.barsik.integrations.constant.Constants.*;
+import static ru.kets.barsik.constant.Constants.*;
 
 public class AbstractJDAMessageListener extends ListenerAdapter {
     Logger LOG = LoggerFactory.getLogger(AbstractJDAMessageListener.class);
@@ -90,7 +90,7 @@ public class AbstractJDAMessageListener extends ListenerAdapter {
         List<Word> abuseWords = wordRepo.findWordsByType(Word.Type.ABUSE);
         if (abuseWords.stream().anyMatch(w ->
                 (content.toLowerCase().contains(COMMAND_PREFIX) || content.toLowerCase().contains(COMMAND_PREFIX_RU)
-                        || content.toLowerCase().contains(KET_PREFIX) || content.toLowerCase().contains(KET_PREFIX_RU))
+                        || content.toLowerCase().contains(CAT_PREFIX) || content.toLowerCase().contains(CAT_PREFIX_RU))
                         && content.toLowerCase().contains(w.getWord().toLowerCase()))) {
             throw new AbuseException();
         }

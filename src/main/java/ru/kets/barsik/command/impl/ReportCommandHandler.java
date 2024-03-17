@@ -10,11 +10,11 @@ import ru.kets.barsik.service.UserService;
 
 import javax.annotation.Resource;
 
-import static ru.kets.barsik.integrations.constant.Constants.ERROR_MESSAGE;
+import static ru.kets.barsik.constant.Constants.CommandName.REPORT_COMMAND_NAME;
+import static ru.kets.barsik.constant.Constants.ERROR_MESSAGE;
 
-@Component("report")
+@Component(REPORT_COMMAND_NAME)
 public class ReportCommandHandler implements MessageCommandHandler {
-    private static final String COMMAND_NAME = "report";
 
     @Resource
     private UserService userService;
@@ -22,7 +22,7 @@ public class ReportCommandHandler implements MessageCommandHandler {
     @Override
     public String command(Message eventMessage) {
         String content = eventMessage.getContentRaw();
-        String user = CommandHelper.extractMessage(content, COMMAND_NAME);
+        String user = CommandHelper.extractMessage(content, REPORT_COMMAND_NAME);
 
         if (StringUtils.isNotBlank(user) && user.startsWith("<@")) {
             String userDiscordId = CommandHelper.extractUser(user);

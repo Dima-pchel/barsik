@@ -5,15 +5,15 @@ import org.springframework.stereotype.Component;
 import ru.kets.barsik.command.MessageCommandHandler;
 import ru.kets.barsik.helper.CommandHelper;
 
-import static ru.kets.barsik.integrations.constant.Constants.ERROR_MESSAGE;
+import static ru.kets.barsik.constant.Constants.CommandName.CHOOSE_COMMAND_NAME;
+import static ru.kets.barsik.constant.Constants.ERROR_MESSAGE;
 
-@Component("choose")
+@Component(CHOOSE_COMMAND_NAME)
 public class ChooseCommandHandler implements MessageCommandHandler {
-    private static final String COMMAND_NAME = "choose";
 
     @Override
     public String command(Message eventMessage) {
-        String choose = CommandHelper.extractMessage(eventMessage.getContentRaw(), COMMAND_NAME);
+        String choose = CommandHelper.extractMessage(eventMessage.getContentRaw(), CHOOSE_COMMAND_NAME);
         String[] variants = choose.split(",");
         if (variants.length > 0) {
             int index = (int) (Math.random() * (variants.length));

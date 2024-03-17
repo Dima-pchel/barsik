@@ -11,7 +11,7 @@ import ru.kets.barsik.dto.SlashCommandResponse;
 
 import java.util.Map;
 
-import static ru.kets.barsik.integrations.constant.Constants.ERROR_MESSAGE;
+import static ru.kets.barsik.constant.Constants.ERROR_MESSAGE;
 
 @Service
 public class SlashCommandListener extends ListenerAdapter implements EventListener {

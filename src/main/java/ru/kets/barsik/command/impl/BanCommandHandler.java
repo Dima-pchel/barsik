@@ -14,11 +14,11 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static ru.kets.barsik.constant.Constants.CommandName.BAN_COMMAND_NAME;
 import static ru.kets.barsik.helper.CommandHelper.generateRandomNumber;
 
-@Component("ban")
+@Component(BAN_COMMAND_NAME)
 public class BanCommandHandler implements MessageCommandHandler {
-    private static final String COMMAND_NAME = "ban";
 
     @Resource
     private BanReasonRepo reasonRepo;
@@ -33,7 +33,7 @@ public class BanCommandHandler implements MessageCommandHandler {
             return String.format(getBanReason(), "<@" + eventMessage.getAuthor().getId() + ">");
         }
         String content = eventMessage.getContentRaw();
-        String user = CommandHelper.extractMessage(content, COMMAND_NAME);
+        String user = CommandHelper.extractMessage(content, BAN_COMMAND_NAME);
         if (StringUtils.isNotBlank(user) && user.startsWith("<@")) {
             String userId = CommandHelper.extractUser(user);
             User discordUser = eventMessage.getGuild().getMemberById(userId).getUser();

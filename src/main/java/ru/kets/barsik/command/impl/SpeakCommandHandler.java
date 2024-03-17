@@ -4,7 +4,9 @@ import net.dv8tion.jda.api.entities.Message;
 import org.springframework.stereotype.Component;
 import ru.kets.barsik.command.MessageCommandHandler;
 
-@Component("speak")
+import static ru.kets.barsik.constant.Constants.CommandName.SPEAK_COMMAND_NAME;
+
+@Component(SPEAK_COMMAND_NAME)
 public class SpeakCommandHandler implements MessageCommandHandler {
 
     @Override

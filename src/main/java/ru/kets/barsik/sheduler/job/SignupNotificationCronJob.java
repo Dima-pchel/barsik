@@ -1,4 +1,4 @@
-package ru.kets.barsik.sheduler;
+package ru.kets.barsik.sheduler.job;
 
 
 import net.dv8tion.jda.api.JDA;
@@ -43,7 +43,7 @@ public class SignupNotificationCronJob {
         Date now = new Date();
         Date after = new Date(now.getTime() + (30 * 60 * 1000));
         JDA jda = botConfiguration.getJda();
-        List<Signup> signups = ListUtils.emptyIfNull(signupRepo.findSignupsByDateBetweenAndNotificated(now, after,false));
+        List<Signup> signups = ListUtils.emptyIfNull(signupRepo.findSignupsByDateBetweenAndNotificated(now, after, false));
         LOG.debug("signups found {}", signups.size());
         for (Signup signup : signups) {
             TextChannel textChannelById = jda.getTextChannelById(signup.getChannelId());

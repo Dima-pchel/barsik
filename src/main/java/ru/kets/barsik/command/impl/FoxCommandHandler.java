@@ -6,7 +6,9 @@ import org.springframework.stereotype.Component;
 import ru.kets.barsik.command.MessageCommandHandler;
 import ru.kets.barsik.integrations.FoxClient;
 
-@Component("fox")
+import static ru.kets.barsik.constant.Constants.CommandName.FOX_COMMAND_NAME;
+
+@Component(FOX_COMMAND_NAME)
 public class FoxCommandHandler implements MessageCommandHandler {
     @Autowired
     private FoxClient foxClient;

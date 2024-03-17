@@ -15,10 +15,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component("banreason")
-public class BanReasonCommandHandler implements MessageCommandHandler {
+import static ru.kets.barsik.constant.Constants.CommandName.BAN_REASON_COMMAND_NAME;
 
-    private static final String COMMAND_NAME = "banreason";
+@Component(BAN_REASON_COMMAND_NAME)
+public class BanReasonCommandHandler implements MessageCommandHandler {
 
     @Resource
     BanReasonRepo banReasonRepo;
@@ -27,7 +27,7 @@ public class BanReasonCommandHandler implements MessageCommandHandler {
     public String command(Message eventMessage) {
         // barsik banreason add %s is not good man!!
         String content = eventMessage.getContentRaw();
-        String subCommand = CommandHelper.extractMessage(content, COMMAND_NAME);
+        String subCommand = CommandHelper.extractMessage(content, BAN_REASON_COMMAND_NAME);
         try {
             Pair<String, String> commandPair = CommandHelper.extractCommand(subCommand);
             String command = commandPair.getLeft();

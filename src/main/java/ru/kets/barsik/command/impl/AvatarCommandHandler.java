@@ -10,19 +10,18 @@ import org.springframework.stereotype.Component;
 import ru.kets.barsik.command.MessageCommandHandler;
 import ru.kets.barsik.helper.CommandHelper;
 
-import static ru.kets.barsik.integrations.constant.Constants.ERROR_MESSAGE;
-import static ru.kets.barsik.integrations.constant.Constants.IMAGE_SIZE_PARAMETER;
+import static ru.kets.barsik.constant.Constants.CommandName.AVATAR_COMMAND_NAME;
+import static ru.kets.barsik.constant.Constants.ERROR_MESSAGE;
+import static ru.kets.barsik.constant.Constants.IMAGE_SIZE_PARAMETER;
 
-@Component("avatar")
+@Component(AVATAR_COMMAND_NAME)
 public class AvatarCommandHandler implements MessageCommandHandler {
 
     Logger LOG = LoggerFactory.getLogger(AvatarCommandHandler.class);
 
-    private static final String COMMAND_NAME = "avatar";
-
     @Override
     public String command(Message eventMessage) {
-        String userId = CommandHelper.extractMessage(eventMessage.getContentRaw(), COMMAND_NAME);
+        String userId = CommandHelper.extractMessage(eventMessage.getContentRaw(), AVATAR_COMMAND_NAME);
         //TODO this
         if (StringUtils.isNotBlank(userId) && userId.startsWith("<@")) {
             eventMessage.getGuild().getMembers();
