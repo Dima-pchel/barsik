@@ -15,7 +15,6 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
-import static ru.kets.barsik.constant.Constants.COMMAND_PREFIX;
 import static ru.kets.barsik.constant.Constants.*;
 
 @Deprecated

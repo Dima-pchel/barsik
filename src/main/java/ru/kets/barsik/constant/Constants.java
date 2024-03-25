@@ -42,5 +42,7 @@ public class Constants {
         public static final String SIGNUP_COMMAND_NAME = "signup";
         public static final String SPEAK_COMMAND_NAME = "speak";
         public static final String TAG_COMMAND_NAME = "tag";
+        public static final String ROULETTE_COMMAND_NAME = "game";
+        public static final String SHOT_COMMAND_NAME = "play";
     }
 }

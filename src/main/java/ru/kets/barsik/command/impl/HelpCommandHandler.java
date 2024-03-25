@@ -38,7 +38,8 @@ public class HelpCommandHandler implements EmbedCommandHandler {
         fieldList.add(new MessageEmbed.Field("speak", "- just speak.", false, false));
         fieldList.add(new MessageEmbed.Field("abuseadd {words}", "- add words to abuse validation. Use comma to separate words", false, false));
         fieldList.add(new MessageEmbed.Field("banreason {reason}", "- add new reason for ban to ban command. %s in reason will be replaced to banned user tag", false, false));
-        fieldList.add(new MessageEmbed.Field("remind {message} ", "- ", false, false));
+        fieldList.add(new MessageEmbed.Field("game create {message} ", "- create new roulette game", false, false));
+        fieldList.add(new MessageEmbed.Field("play", "- shoot in roulette game", false, false));
 
         MessageEmbed.ImageInfo img = new MessageEmbed.ImageInfo(WORLD_DOMINATION_CAT, WORLD_DOMINATION_CAT, 200, 200);
 
