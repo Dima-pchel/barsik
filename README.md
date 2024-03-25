@@ -18,3 +18,13 @@ discord funny bot
 
 1. Выполняем в cmd: mvn clean install -U 
 2. запускаем сервер: mvn spring-boot:run
+
+
+# Памятка для развертывания на сервере
+
+1.`fuser -k 8090/tcp` - для остановки приложения
+2. Выполняем в cmd: mvn clean install -U
+3. запускаем сервер: mvn spring-boot:run
+4. `ctrl+z + bg` - выйти в фоновый режим 
+5. disown -ah
+
