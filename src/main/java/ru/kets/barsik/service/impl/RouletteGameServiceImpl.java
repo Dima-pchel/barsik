@@ -76,7 +76,7 @@ public class RouletteGameServiceImpl implements RouletteGameService {
         if (random == 0) {
             return String.format("<@%s> lost the game.\n%s\n %s", userId, game.getDescription(), shotMap.get(random));
         } else {
-            return String.format("Click..... <@%s> was lucky today. \n %s", userId, shotMap.get(random));
+            return String.format("Click..... <@%s> was lucky today. \n %s \n Game: %s", userId, shotMap.get(random), game.getDescription());
         }
     }
 
