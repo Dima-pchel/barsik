@@ -8,4 +8,4 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: test
-        run: echo Hello, world!
+        run: echo Hello, world! 11
