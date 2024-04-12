@@ -15,13 +15,14 @@ import java.util.List;
 @Configuration
 public class JDABotConfiguration {
 
-    @Value("${token}")
-    private String token;
+    @Value("${token.variable}")
+    private String tokenVariable;
 
     private JDA jda;
 
     @Bean
     public JDA configureBot(List<EventListener> listeners) {
+        String token = System.getenv(tokenVariable);
         JDABuilder builder = JDABuilder.createDefault(token);
 
         // Disable parts of the cache

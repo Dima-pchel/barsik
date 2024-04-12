@@ -12,8 +12,8 @@ import java.util.List;
 //TODO remove this
 public class BotConfiguration {
 
-    @Value("${token}")
-    private String token;
+    @Value("${token.variable}")
+    private String tokenVariable;
 
     private GatewayDiscordClient client;
 
@@ -33,6 +33,7 @@ public class BotConfiguration {
 
     public GatewayDiscordClient getGatewayDiscordClient() {
         if (this.client == null) {
+            String token = System.getenv(tokenVariable);
             GatewayDiscordClient client = DiscordClientBuilder.create(token)
                     .build()
                     .login()
