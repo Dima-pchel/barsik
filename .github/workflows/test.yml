@@ -21,9 +21,8 @@ jobs:
     - name: Stop app
       continue-on-error: true
       run: fuser -k 8090/tcp
-    - name: CD
-      run: cd /opt/barsik/barsik
     - name: Git pull
-      run: git pull origin master
+      run: cd /opt/barsik/barsik && git pull origin master
+      continue-on-error: true
     - name: Run
-      run: mvn spring-boot:run
+      run: cd /opt/barsik/barsik && mvn spring-boot:run
