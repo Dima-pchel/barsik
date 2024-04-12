@@ -19,6 +19,7 @@ jobs:
 
     steps:
     - name: Stop app
+      continue-on-error: true
       run: fuser -k 8090/tcp
     - name: CD
       run: cd /opt/barsik/barsik
