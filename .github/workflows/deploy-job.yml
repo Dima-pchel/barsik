@@ -7,5 +7,5 @@ jobs:
   deploy:
     runs-on: self-hosted
     steps:
-      - name: run
+      - name: test
         run: echo Hello, world!
