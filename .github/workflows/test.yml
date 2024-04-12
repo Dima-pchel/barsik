@@ -20,3 +20,5 @@ jobs:
     steps:
     - name: Build with Maven
       run: echo Hello, world!
+    - name: Build with Maven
+      run: echo Hello, world2!
