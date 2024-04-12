@@ -1,0 +1,24 @@
+name: Deploy runner
+
+on:
+  push:
+    branches: [ "master"]
+
+jobs:
+  prepare-environment:
+    runs-on: self-hosted
+    steps:
+      - name: Stop and remove containers, networks
+        run: fuser -k 8090/tcp
+      - name: cd barsik repo
+        run: cd /opt/barsik/barsik
+      - name: git update
+        run: git pull origin master
+  deploy:
+    runs-on: self-hosted
+    needs: prepare-environment
+    steps:
+      - name: cd barsik repo
+        uses: cd /opt/barsik/barsik
+      - name: run
+        run: mvn spring-boot:run
