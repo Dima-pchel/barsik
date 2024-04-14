@@ -19,7 +19,7 @@ jobs:
 
     steps:
     - name: Stop app
-      run: docker-compose down
+      run: cd /opt/barsik/barsik && docker-compose down
     - name: Git pull
       run: cd /opt/barsik/barsik && git pull origin docker
     - name: Remove unused
