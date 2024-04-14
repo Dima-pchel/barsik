@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  barsik:
+    build: ./barsik
+    environment:
+      - BARSIK_TOKEN=${BARSIK_TOKEN}
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=barsik
+    ports:
+      - "3360:3306"
+    volumes:
+      - mysql_kets:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    ports:
+      - "8888:8080"
+volumes:
+  mysql_kets:

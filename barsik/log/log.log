@@ -1,0 +1,18 @@
+2024-04-14 16:10:00.601  INFO 24148 --- [main] ru.kets.barsik.BarsikApplication         : Starting BarsikApplication using Java 11.0.10 on DESKTOP-07EO20E with PID 24148 (C:\kets\barsik\barsik\target\classes started by 79163 in C:\kets\barsik\barsik)
+2024-04-14 16:10:00.603  INFO 24148 --- [main] ru.kets.barsik.BarsikApplication         : No active profile set, falling back to 1 default profile: "default"
+2024-04-14 16:10:01.970  INFO 24148 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-04-14 16:10:02.041  INFO 24148 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 65 ms. Found 7 JPA repository interfaces.
+2024-04-14 16:10:02.417  INFO 24148 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-04-14 16:10:02.658  INFO 24148 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-04-14 16:10:02.692  INFO 24148 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-04-14 16:10:02.723  INFO 24148 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.10.Final
+2024-04-14 16:10:02.833  INFO 24148 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-04-14 16:10:02.916  INFO 24148 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL57Dialect
+2024-04-14 16:10:03.418  INFO 24148 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-04-14 16:10:03.425  INFO 24148 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-04-14 16:10:04.412  INFO 24148 --- [main] net.dv8tion.jda.api.JDA                  : Login Successful!
+2024-04-14 16:10:04.750  INFO 24148 --- [JDA MainWS-ReadThread] n.d.j.internal.requests.WebSocketClient  : Connected to WebSocket
+2024-04-14 16:10:04.771  INFO 24148 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2024-04-14 16:10:05.096  INFO 24148 --- [JDA MainWS-ReadThread] net.dv8tion.jda.api.JDA                  : Finished Loading!
+2024-04-14 16:10:05.361  INFO 24148 --- [main] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 8090
+2024-04-14 16:10:05.374  INFO 24148 --- [main] ru.kets.barsik.BarsikApplication         : Started BarsikApplication in 5.068 seconds (JVM running for 5.856)
