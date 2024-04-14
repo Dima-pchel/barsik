@@ -21,7 +21,7 @@ jobs:
     - name: Stop app
       run: cd /opt/barsik/barsik && docker-compose down
     - name: Git pull
-      run: cd /opt/barsik/barsik && git pull origin docker
+      run: cd /opt/barsik/barsik && git pull origin docker_new
     - name: Remove unused
       run: docker system prune -a -f
     - name: Run
