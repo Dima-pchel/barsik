@@ -10,7 +10,7 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "test" ]
+    branches: [ "docker_new" ]
 
 jobs:
   build:
@@ -19,10 +19,10 @@ jobs:
 
     steps:
     - name: Stop app
-      continue-on-error: true
-      run: fuser -k 8090/tcp
+      run: cd /opt/barsik/barsik && docker-compose down
     - name: Git pull
-      run: cd /opt/barsik/barsik && git pull origin master
-      continue-on-error: true
+      run: cd /opt/barsik/barsik && git pull origin docker_new
+    - name: Remove unused
+      run: docker system prune -a -f
     - name: Run
-      run: cd /opt/barsik/barsik && mvn spring-boot:run
+      run: cd /opt/barsik/barsik && docker-compose up -d -build
