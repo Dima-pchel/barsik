@@ -1,0 +1,21 @@
+version: '3.5'
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=barsik
+    container_name: mysql
+    ports:
+      - "3360:3306"
+    volumes:
+      - mysql_kets:/var/lib/mysql
+    networks:
+      - mysql
+volumes:
+  mysql_kets:
+networks:
+  mysql:
+    driver: bridge
+    name: mysql_net 

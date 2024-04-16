@@ -1,0 +1,13 @@
+version: '3.5'
+services:
+  barsik:
+    image: dimapchel/kets:1.0.0.3
+    container_name: barsik
+    environment:
+      - BARSIK_TOKEN=${BARSIK_TOKEN}
+    networks:
+      - barsik
+networks:
+  barsik:
+    external: 
+      name: mysql_net
