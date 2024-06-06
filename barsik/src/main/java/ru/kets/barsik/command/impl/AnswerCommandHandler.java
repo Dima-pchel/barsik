@@ -34,7 +34,7 @@ public class AnswerCommandHandler implements MessageCommandHandler {
         for (Map.Entry<Link.Type, Integer> entry : answerMap.entrySet()) {
             if(random <= entry.getValue()) {
                 List<Link> links = linkRepo.findLinksByType(entry.getKey());
-                Link link = links.get(CommandHelper.generateRandomNumber(links.size() - 1));
+                Link link = links.get(CommandHelper.generateRandomNumber(links.size()));
                 return link.toString();
             }
         }
