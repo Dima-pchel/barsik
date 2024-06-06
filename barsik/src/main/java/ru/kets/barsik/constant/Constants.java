@@ -44,5 +44,6 @@ public class Constants {
         public static final String TAG_COMMAND_NAME = "tag";
         public static final String ROULETTE_COMMAND_NAME = "game";
         public static final String SHOT_COMMAND_NAME = "play";
+        public static final String LINK_COMMAND_NAME = "link";
     }
 }

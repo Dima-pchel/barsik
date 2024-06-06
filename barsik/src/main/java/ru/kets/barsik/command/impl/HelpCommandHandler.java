@@ -40,6 +40,7 @@ public class HelpCommandHandler implements EmbedCommandHandler {
         fieldList.add(new MessageEmbed.Field("banreason {reason}", "- add new reason for ban to ban command. %s in reason will be replaced to banned user tag", false, false));
         fieldList.add(new MessageEmbed.Field("game create {message} ", "- create new roulette game", false, false));
         fieldList.add(new MessageEmbed.Field("play", "- shoot in roulette game", false, false));
+        fieldList.add(new MessageEmbed.Field("link", "- command for work with links", false, false));
 
         MessageEmbed.ImageInfo img = new MessageEmbed.ImageInfo(WORLD_DOMINATION_CAT, WORLD_DOMINATION_CAT, 200, 200);
 
