@@ -1,4 +1,4 @@
-FROM openjdk:11
+FROM eclipse-temurin:8u462-b08-jdk-noble
 MAINTAINER KETS
 WORKDIR /opt
 RUN apt-get update && apt-get install -y maven

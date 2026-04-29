@@ -289,9 +289,14 @@ public class SignupServiceImpl implements SignupService {
             fieldList.add(field);
         }
 
+        if (offDateTime != null) {
+            MessageEmbed.Field field = new MessageEmbed.Field("Your Time:", "<t:" + offDateTime.toInstant().getEpochSecond() + ":f>", false, false);
+            fieldList.add(field);
+        }
+
         MessageEmbed.Footer footer = null;
         if (signup.getDate() != null) {
-            footer = new MessageEmbed.Footer("Your Time", TIME_ICON_IMG_LINK, null);
+            footer = new MessageEmbed.Footer("Time", TIME_ICON_IMG_LINK, null);
         }
 
 //        MessageEmbed.AuthorInfo authorInfo = new MessageEmbed.AuthorInfo("name", "", "", "");

@@ -34,7 +34,7 @@ public class JDABotConfiguration {
         // Disable compression (not recommended)
 //        builder.setCompression(Compression.NONE);
         // Set activity (like "playing Something")
-        builder.setActivity(Activity.watching("тебе в душу"));
+        builder.setActivity(Activity.watching("Ищет кого бы отшлепать"));
         // need for correct working member cache policy
         builder.enableIntents(GatewayIntent.GUILD_MEMBERS, GatewayIntent.MESSAGE_CONTENT);
 
