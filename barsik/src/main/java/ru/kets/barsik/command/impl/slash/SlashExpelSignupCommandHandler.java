@@ -16,7 +16,8 @@ public class SlashExpelSignupCommandHandler extends AbstractSlashSignupCommandHa
         if (userOption == null) {
             throw new EmbedCommandException("Please specify a user.");
         }
-        String role = event.getOption("role") != null ? event.getOption("role").toString() : null;
+        OptionMapping roleOption = event.getOption("role");
+        String role = roleOption != null ? roleOption.getAsString() : null;
         String user = userOption.getAsString();
         return getSignupService().removeUser(event.getChannel(), CommandHelper.extractUser(user), role);
     }
