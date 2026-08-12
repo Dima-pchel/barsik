@@ -1,5 +1,6 @@
 package ru.kets.barsik.command.impl;
 
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
 import org.apache.commons.lang3.StringUtils;
@@ -36,9 +37,11 @@ public class BanCommandHandler implements MessageCommandHandler {
         String user = CommandHelper.extractMessage(content, BAN_COMMAND_NAME);
         if (StringUtils.isNotBlank(user) && user.startsWith("<@")) {
             String userId = CommandHelper.extractUser(user);
-            User discordUser = eventMessage.getGuild().getMemberById(userId).getUser();
-            userService.updateBanCount(discordUser);
-            return String.format(getBanReason(), user);
+            Member member = eventMessage.getGuild().getMemberById(userId);
+            if (member != null) {
+                userService.updateBanCount(member.getUser());
+                return String.format(getBanReason(), user);
+            }
         }
 
         return "<@" + eventMessage.getAuthor().getId() + "> has been banned for having too broken hands";
