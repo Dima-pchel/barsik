@@ -41,6 +41,14 @@
 			</exclusions>
 		</dependency>
 
+		<!-- Enables Mockito static mocking (needed to make CommandHelper.generateRandomNumber deterministic in tests) -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-inline</artifactId>
+			<version>${mockito.version}</version>
+			<scope>test</scope>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/net.dv8tion/JDA -->
 		<dependency>
 			<groupId>net.dv8tion</groupId>
