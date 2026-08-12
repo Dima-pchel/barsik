@@ -9,7 +9,7 @@ discord funny bot
 
 # Разворачивание бота
 
-1. в MySQL создаем схему с названием barsik `CREATE SCHEMA 'test' DEFAULT CHARACTER SET utf8 ;`, в случае если пользователь схемы отличается от root/root, актуальные данные следует внести в application.properties в значения spring.datasource.username=root
+1. в MySQL создаем схему с названием barsik `CREATE SCHEMA 'barsik' DEFAULT CHARACTER SET utf8 ;`, в случае если пользователь схемы отличается от root/root, актуальные данные следует внести в application.properties в значения spring.datasource.username=root
    spring.datasource.password=root
 2. Заполняем проперти в application.properties token значением актуального ключа бота. (В целях безопасности не стоит вносить этот ключ в комит)
 3. Можно выполнять сборку и запуск приложения.
