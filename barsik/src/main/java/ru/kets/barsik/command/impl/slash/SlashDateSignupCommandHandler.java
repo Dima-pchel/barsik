@@ -2,6 +2,7 @@ package ru.kets.barsik.command.impl.slash;
 
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import org.springframework.stereotype.Component;
 import ru.kets.barsik.exception.EmbedCommandException;
 
@@ -10,6 +11,10 @@ public class SlashDateSignupCommandHandler extends AbstractSlashSignupCommandHan
 
     @Override
     MessageEmbed processCommand(SlashCommandInteractionEvent event) throws EmbedCommandException {
-        return getSignupService().setDate(event.getChannel(), event.getOption("date").getAsString());
+        OptionMapping dateOption = event.getOption("date");
+        if (dateOption == null) {
+            throw new EmbedCommandException("Please specify a date.");
+        }
+        return getSignupService().setDate(event.getChannel(), dateOption.getAsString());
     }
 }

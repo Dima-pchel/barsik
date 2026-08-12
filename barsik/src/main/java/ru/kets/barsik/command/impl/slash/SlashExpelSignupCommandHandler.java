@@ -2,6 +2,7 @@ package ru.kets.barsik.command.impl.slash;
 
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import org.springframework.stereotype.Component;
 import ru.kets.barsik.exception.EmbedCommandException;
 import ru.kets.barsik.helper.CommandHelper;
@@ -11,8 +12,13 @@ public class SlashExpelSignupCommandHandler extends AbstractSlashSignupCommandHa
 
     @Override
     MessageEmbed processCommand(SlashCommandInteractionEvent event) throws EmbedCommandException {
-        String role = event.getOption("role") != null ? event.getOption("role").toString() : null;
-        String user = event.getOption("user").getAsString();
+        OptionMapping userOption = event.getOption("user");
+        if (userOption == null) {
+            throw new EmbedCommandException("Please specify a user.");
+        }
+        OptionMapping roleOption = event.getOption("role");
+        String role = roleOption != null ? roleOption.getAsString() : null;
+        String user = userOption.getAsString();
         return getSignupService().removeUser(event.getChannel(), CommandHelper.extractUser(user), role);
     }
 }

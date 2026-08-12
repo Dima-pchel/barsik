@@ -6,16 +6,13 @@ import ru.kets.barsik.exception.ExtractCommandException;
 
 import java.util.Optional;
 
-import static ru.kets.barsik.constant.Constants.COMMAND_PREFIX;
 import static ru.kets.barsik.constant.Constants.ERROR_MESSAGE;
 
 public class CommandHelper {
 
     public static String extractMessage(String content, String commandName) {
-        String lowerContent = content.toLowerCase();
-        String start = String.join(" ", COMMAND_PREFIX.toLowerCase(), commandName.toLowerCase());
-        String message = content.substring(lowerContent.indexOf(start) + start.length());
-        return message.trim();
+        String[] parts = content.trim().split("\\s+", 3);
+        return parts.length > 2 ? parts[2].trim() : StringUtils.EMPTY;
     }
 
     public static Pair<String, String> extractCommand(String content) throws ExtractCommandException {

@@ -2,6 +2,7 @@ package ru.kets.barsik.command.impl.slash;
 
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import org.springframework.stereotype.Component;
 import ru.kets.barsik.exception.EmbedCommandException;
 
@@ -10,6 +11,10 @@ public class SlashImageSignupCommandHandler extends AbstractSlashSignupCommandHa
 
     @Override
     MessageEmbed processCommand(SlashCommandInteractionEvent event) throws EmbedCommandException {
-        return getSignupService().setImage(event.getChannel(), event.getOption("image").getAsString());
+        OptionMapping imageOption = event.getOption("image");
+        if (imageOption == null) {
+            throw new EmbedCommandException("Please specify an image link.");
+        }
+        return getSignupService().setImage(event.getChannel(), imageOption.getAsString());
     }
 }

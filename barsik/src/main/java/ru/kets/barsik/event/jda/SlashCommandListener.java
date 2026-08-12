@@ -4,6 +4,8 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.hooks.EventListener;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.kets.barsik.command.SlashCommandHandler;
@@ -15,6 +17,9 @@ import static ru.kets.barsik.constant.Constants.ERROR_MESSAGE;
 
 @Service
 public class SlashCommandListener extends ListenerAdapter implements EventListener {
+
+    private static final Logger LOG = LoggerFactory.getLogger(SlashCommandListener.class);
+    private static final int MAX_ERROR_LENGTH = 500;
 
     @Autowired
     Map<String, SlashCommandHandler> slashCommandHandlerMap;
@@ -37,8 +42,15 @@ public class SlashCommandListener extends ListenerAdapter implements EventListen
                 event.reply(String.format("Command %s not found", event.getName())).queue();
             }
         } catch (Exception e) {
-            event.reply(ERROR_MESSAGE);
+            LOG.error(e.getMessage(), e);
+            event.reply(ERROR_MESSAGE + "\n" + spoiler(e)).queue();
         }
+    }
+
+    private String spoiler(Exception e) {
+        String message = StringUtils.isNotBlank(e.getMessage()) ? e.getMessage() : e.getClass().getSimpleName();
+        String truncated = StringUtils.abbreviate(message, MAX_ERROR_LENGTH);
+        return "||" + truncated + "||";
     }
 
 }
