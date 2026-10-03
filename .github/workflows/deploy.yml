@@ -1,26 +1,77 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
-
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
 name: Deploy Barsik
+
+# Тесты -> сборка образа -> push в Docker Hub -> выкатка на сервер по SSH.
+#
+# Нужны настройки репозитория (Settings -> Secrets and variables -> Actions):
+#   Variables: DOCKERHUB_USERNAME, DEPLOY_HOST, DEPLOY_KNOWN_HOSTS
+#   Secrets:   DOCKERHUB_TOKEN, DEPLOY_SSH_KEY
 
 on:
   push:
     branches: [ "master" ]
+  workflow_dispatch:
+
+# Деплои идут строго по очереди, незавершённый не отменяем
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+env:
+  IMAGE: dimapchel/kets
 
 jobs:
-  build:
-
-    runs-on: self-hosted
-
+  test:
+    runs-on: ubuntu-latest
     steps:
-    - name: Stop app
-      run: docker-compose down
-    - name: Remove unused
-      run: docker system prune -a -f
-    - name: Run
-      run: docker-compose up -d
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '8'
+          cache: maven
+
+      # BarsikApplicationTests поднимает весь контекст (нужны БД и токен Discord), в CI его пропускаем
+      - name: Unit tests
+        run: mvn -B -ntp -f barsik/pom.xml test -Dtest='!BarsikApplicationTests'
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Image tag
+        run: echo "TAG=sha-${GITHUB_SHA::7}" >> "$GITHUB_ENV"
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: ./barsik
+          push: true
+          tags: ${{ env.IMAGE }}:${{ env.TAG }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      # Ключ на сервере привязан к /opt/barsik/deploy.sh, поэтому в SSH передаём только тег
+      - name: Deploy to server
+        env:
+          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          KNOWN_HOSTS: ${{ vars.DEPLOY_KNOWN_HOSTS }}
+          HOST: ${{ vars.DEPLOY_HOST }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          ssh -i ~/.ssh/id_deploy \
+              -o IdentitiesOnly=yes \
+              -o StrictHostKeyChecking=yes \
+              "deploy@${HOST}" "$TAG"

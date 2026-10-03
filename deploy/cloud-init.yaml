@@ -1,0 +1,112 @@
+#cloud-config
+# cloud-init для Ubuntu 24.04 (2 vCPU / 4 ГБ RAM / 50 ГБ NVMe).
+# Перед использованием замени ssh_authorized_keys на свой публичный ключ.
+
+hostname: barsik
+manage_etc_hosts: true
+timezone: UTC
+
+users:
+  - name: deploy
+    gecos: Barsik deploy user
+    shell: /bin/bash
+    groups: [sudo]          # в группу docker добавим после установки Docker
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    lock_passwd: true       # вход только по ключу
+    ssh_authorized_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBfDX2inhp7aXWg/6/qJUpaTMAzwQEHXVngWXE+ob5fU pchelHome
+
+# root по SSH не пускаем, но сам аккаунт не трогаем (нужен для консоли провайдера)
+disable_root: true
+
+package_update: true
+package_upgrade: true
+package_reboot_if_required: true
+
+packages:
+  - ca-certificates
+  - curl
+  - gnupg
+  - git
+  - ufw
+  - fail2ban
+  - unattended-upgrades
+  - htop
+  - unzip
+
+# Swap 2 ГБ: страховка от OOM при mvn-сборке образа на сервере (при работе бота почти не используется)
+swap:
+  filename: /swapfile
+  size: 2G
+  maxsize: 2G
+
+write_files:
+  # Имя 00-*, потому что в sshd для каждого параметра действует первое найденное значение,
+  # а 50-cloud-init.conf может включать PasswordAuthentication.
+  - path: /etc/ssh/sshd_config.d/00-hardening.conf
+    permissions: "0644"
+    content: |
+      PermitRootLogin no
+      PasswordAuthentication no
+      KbdInteractiveAuthentication no
+      PubkeyAuthentication yes
+      MaxAuthTries 3
+      AllowUsers deploy
+
+  - path: /etc/fail2ban/jail.d/sshd.local
+    permissions: "0644"
+    content: |
+      [sshd]
+      enabled = true
+      backend = systemd
+      maxretry = 5
+      findtime = 10m
+      bantime = 1h
+
+  # Ротация логов контейнеров, чтобы диск не забился
+  - path: /etc/docker/daemon.json
+    permissions: "0644"
+    content: |
+      {
+        "log-driver": "json-file",
+        "log-opts": { "max-size": "10m", "max-file": "3" }
+      }
+
+  - path: /etc/sysctl.d/99-swappiness.conf
+    permissions: "0644"
+    content: |
+      vm.swappiness=10
+
+  - path: /etc/apt/apt.conf.d/20auto-upgrades
+    permissions: "0644"
+    content: |
+      APT::Periodic::Update-Package-Lists "1";
+      APT::Periodic::Unattended-Upgrade "1";
+
+runcmd:
+  # --- Docker (официальный репозиторий) ---
+  - install -m 0755 -d /etc/apt/keyrings
+  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+  - chmod a+r /etc/apt/keyrings/docker.asc
+  - echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo $VERSION_CODENAME) stable" > /etc/apt/sources.list.d/docker.list
+  - apt-get update
+  - DEBIAN_FRONTEND=noninteractive apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  - usermod -aG docker deploy
+  - systemctl enable --now docker
+
+  # --- Файрвол: пока открыт только SSH ---
+  - ufw default deny incoming
+  - ufw default allow outgoing
+  - ufw allow 22/tcp
+  - ufw --force enable
+
+  # --- Применяем настройки ---
+  - sysctl --system
+  - systemctl enable --now fail2ban
+  - systemctl restart ssh
+
+  # --- Каталог проекта ---
+  - mkdir -p /opt/barsik
+  - chown deploy:deploy /opt/barsik
+
+final_message: "cloud-init завершён за $UPTIME сек. Подключайся: ssh deploy@<IP>"

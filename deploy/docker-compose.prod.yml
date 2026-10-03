@@ -1,0 +1,34 @@
+# Прод-compose для нового сервера: бот берётся из готового образа, а не собирается на сервере.
+# Нужен файл .env рядом (не коммитить):
+#   BARSIK_TOKEN=...            токен бота
+#   BARSIK_TAG=1.0.0.4          тег образа dimapchel/kets
+services:
+  db:
+    image: mysql:5.7
+    container_name: mysql        # application.properties подключается к хосту "mysql"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root  # должен совпадать с spring.datasource.password в образе
+      MYSQL_DATABASE: barsik
+    ports:
+      - "127.0.0.1:3360:3306"    # только с самого сервера; снаружи — через SSH-туннель
+    volumes:
+      - mysql_kets:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  barsik:
+    image: dimapchel/kets:${BARSIK_TAG:?укажи BARSIK_TAG в .env}
+    container_name: barsik
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - BARSIK_TOKEN=${BARSIK_TOKEN:?укажи BARSIK_TOKEN в .env}
+
+volumes:
+  mysql_kets:
